@@ -1,0 +1,52 @@
+"""Parameters of a client"""
+type Cliente {
+  id: ID
+  name: String
+  surname: String
+  company: String
+  emails: [Email]
+  age: Int
+  type: TypeClient
+  orders: [Order]
+}
+type Order {
+  product: String
+  pirce: Int
+}
+type Email {
+  email: String
+}
+enum TypeClient {
+  BASIC
+  PREMIUM
+}
+"""Query client"""
+type Query {
+  """Query to get client information"""
+  getClient(id: ID): Cliente
+}
+
+# Mutaciones
+input EmailInput {
+  email: String
+}
+input OrderInput {
+  product: String
+  pirce: Int
+}
+"""Parameters to create new client"""
+input ClientInput {
+  id: ID
+  name: String!
+  surname: String!
+  company: String!
+  emails: [EmailInput]!
+  age: Int!
+  type: TypeClient!
+  orders: [OrderInput]
+}
+"""Mutation to clients"""
+type Mutation {
+"""Mutation to create new clients"""
+  createClient(input: ClientInput): Cliente
+}
