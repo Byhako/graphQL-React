@@ -11,6 +11,16 @@ const schema = buildSchema(`
   type Query {
     cliente: Cliente
   }
+  input ClientInput {
+    id: ID
+    name: String!
+    surname: String!
+    company: String!
+    email: String!
+  }
+  type Mutation {
+    createClient(input: ClientInput): Cliente
+  }
 `);
 
 export default schema;
