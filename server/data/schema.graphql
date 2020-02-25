@@ -59,6 +59,8 @@ input UpdateClientInput {
 type Mutation {
   """Mutation to create new clients"""
   createClient(input: ClientInput): Cliente
-  """Mutation to update clients"""
+  """Mutation to update client"""
   updateClient(input: UpdateClientInput): Cliente
+  """Mutation to delete client"""
+  deleteClient(id: ID!): String
 }
