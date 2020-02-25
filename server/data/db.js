@@ -2,7 +2,14 @@ import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/tiendaUdemy', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+mongoose.connect(
+  'mongodb://localhost/tiendaUdemy',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  }
+);
 
 const clientSchema = new mongoose.Schema({
   name: String,

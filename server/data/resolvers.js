@@ -3,9 +3,17 @@ import { Clients } from './db';
 
 export const resolvers = {
   Query: {
-    getClient: ({id}) => (
-      new Clients(id, clientDb[id])
-    )
+    getClients: (root, {limit}) => {
+      return Clients.find({}).limit(limit);
+    },
+    getClient: (root, {id}) => {
+      return new Promise((resolve, rejects) => {
+        Clients.findById(id, (error, cliente) => {
+          if (error) rejects(error)
+          else resolve(cliente)
+        })
+      })
+    }
   },
   Mutation: {
     createClient: (root, {input}) => {
