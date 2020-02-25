@@ -45,8 +45,20 @@ input ClientInput {
   type: TypeClient!
   orders: [OrderInput]
 }
+input UpdateClientInput {
+  id: ID
+  name: String
+  surname: String
+  company: String
+  emails: [EmailInput]
+  age: Int
+  type: TypeClient
+  orders: [OrderInput]
+}
 """Mutation to clients"""
 type Mutation {
-"""Mutation to create new clients"""
+  """Mutation to create new clients"""
   createClient(input: ClientInput): Cliente
+  """Mutation to update clients"""
+  updateClient(input: UpdateClientInput): Cliente
 }
