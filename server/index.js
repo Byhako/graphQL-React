@@ -19,4 +19,3 @@ const PORT = 5050;
 app.listen(PORT, () => {
   console.log(`Server run in the port ${PORT}`);
 });
-
