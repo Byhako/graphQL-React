@@ -1,21 +1,11 @@
 import express from 'express';
-import graphqlHTTP from 'express-graphql';
-import { schema } from './data/schema';
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs } from './data/schema';
+import { resolvers } from './data/resolvers';
 
 const app = express();
+const server = new ApolloServer({ typeDefs, resolvers });
 
-app.get('/', (req, res) => {
-  res.send('Server run happy.')
-});
+server.applyMiddleware({ app });
 
-schema().then((schema)=>{
-  app.use('/graphql',graphqlHTTP({
-    schema,
-    graphiql: true
-  }));
-});
-
-const PORT = 5050;
-app.listen(PORT, () => {
-  console.log(`Server run in the port ${PORT}`);
-});
+app.listen({ port: 5050 }, () => console.log('Server run in port 5050'));
