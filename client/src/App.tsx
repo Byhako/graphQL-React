@@ -1,10 +1,13 @@
 import React from 'react';
 
+import Header from './components/Header';
+import Clients from './components/Clients';
 
 function App() {
   return (
-    <div className="App">
-      HOME
+    <div>
+      <Header />
+      <Clients />
     </div>
   );
 }
