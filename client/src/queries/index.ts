@@ -7,10 +7,7 @@ export const CLIENTS_QUERY = gql`
       name
       surname
       company
-      emails { email }
-      age
       type
-      orders { product pirce }
     }
   }
 `;

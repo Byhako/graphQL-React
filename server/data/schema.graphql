@@ -34,7 +34,7 @@ input EmailInput {
 }
 input OrderInput {
   product: String
-  pirce: Int
+  price: Int
 }
 """Parameters to create new client"""
 input ClientInput {
