@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
 import { CLIENTS_QUERY } from '../queries';
 
@@ -20,7 +21,7 @@ const Clients = () => (
                    <small>{item.type}</small>
                   </div>
                   <div className='col-4 d-flex justify-content-end'>
-                   <span className='btn btn-success d-block d-md-inline-block'>Editar Cliente</span>
+                   <Link to={`/edit/${item.id}`} className='btn btn-success d-block d-md-inline-block'>Editar Cliente</Link>
                   </div>
                 </div>
               </li>
