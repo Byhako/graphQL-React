@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { NEW_CLIENT } from '../mutations';
 import { Mutation } from 'react-apollo';
@@ -14,6 +15,7 @@ const NewClient = () => {
   });
 
   const [error, setError] = useState(false);
+  const [messageModal, setMessageModal] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -55,14 +57,26 @@ const NewClient = () => {
         .then(resp => {
           if (resp.data) {
             const { name, surname } = resp.data.createClient
-            alert(`Cliente ${name} ${surname} creado.`);
+            setMessageModal(`Cliente ${name} ${surname} creado.`);
           } else {
-            alert('Error. Cliente no creado.');
+            setMessageModal('Error. Cliente no creado.');
           }
         });
     } else {
       setError(true);
     }
+  };
+
+  const closeModal = () => {
+    setMessageModal('');
+    setState({
+      name: '',
+      surname: '',
+      company: '',
+      emails: [{ email: '' }],
+      age: '',
+      type: ''
+    });
   };
 
   return (
@@ -162,6 +176,32 @@ const NewClient = () => {
           </form>
         )}
       </Mutation>
+
+      {/* Modal */}
+      <div
+        className="modal"
+        role="dialog"
+        style={{ display: `${messageModal === '' ? 'none' : 'block'}`, opacity: '1',backgroundColor: '#4a4a4945'}}
+      >
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-body">
+              <p style={{ margin: '5px' }}>{messageModal}</p>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+                onClick={closeModal}
+              >Cerrar</button>
+              <Link to='/'>
+                <button type="button" className="btn btn-primary">Volver a Lista</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
