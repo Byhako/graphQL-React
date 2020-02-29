@@ -54,14 +54,14 @@ const NewClient = () => {
     ) {
       const input = { ...state }
       createClient({ variables: { input } })
-        .then(resp => {
-          if (resp.data) {
-            const { name, surname } = resp.data.createClient
-            setMessageModal(`Cliente ${name} ${surname} creado.`);
-          } else {
-            setMessageModal('Error. Cliente no creado.');
-          }
-        });
+        // .then(resp => {
+        //   if (resp.data) {
+        //     const { name, surname } = resp.data.createClient
+        //     setMessageModal(`Cliente ${name} ${surname} creado.`);
+        //   } else {
+        //     setMessageModal('Error. Cliente no creado.');
+        //   }
+        // });
     } else {
       setError(true);
     }
@@ -88,7 +88,11 @@ const NewClient = () => {
       {error && (
         <h5 className='alert alert-danger p-3 w-100 text-center'>Faltan campos por llenar!</h5>
       )}
-      <Mutation mutation={NEW_CLIENT}>
+      <Mutation
+        mutation={NEW_CLIENT}
+        onCompleted={() => setMessageModal(`Cliente ${state.name} ${state.surname} creado.`)}
+        onError={() => setMessageModal('Error. Cliente no creado.')}
+      >
         {createClient => (
           <form
             className='col-8 m-3'

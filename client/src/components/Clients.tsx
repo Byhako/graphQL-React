@@ -4,8 +4,9 @@ import { Query } from 'react-apollo';
 import { CLIENTS_QUERY } from '../queries';
 
 const Clients = () => (
-  <Query query={CLIENTS_QUERY}>
-    {({ loading, error, data }): any => {
+  // pollInterval={1000}
+  <Query query={CLIENTS_QUERY} fetchPolicy="network-only">
+    {({ loading, error, data, startPolling, stopPolling }): any => {
       if (loading) return 'Loading...'
       if (error) return `Error: ${error.message}`
 
