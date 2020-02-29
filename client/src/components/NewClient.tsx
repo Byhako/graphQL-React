@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { NEW_CLIENT } from '../mutations';
 import { Mutation } from 'react-apollo';
@@ -13,6 +13,16 @@ const NewClient = () => {
     type: ''
   });
 
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(false);
+      }, 2000);
+    }
+  }, [error]);
+
   const handleChangeEmails = (e: any, idx: number) => {
     const value = e.target.value;
     const emails = state.emails.map(email => email);
@@ -21,8 +31,38 @@ const NewClient = () => {
     } else {
       emails.push({ email: value });
     }
-
     setState({ ...state, emails });
+  };
+
+  const handleCreateClient = (e, createClient) => {
+    e.preventDefault();
+    let emailsError = false;
+
+    state.emails.forEach((item: any) => {
+      if (!item.email) emailsError = true;
+    })
+
+    if (
+      state.name !== '' ||
+      state.surname !== '' ||
+      state.company !== '' ||
+      state.age !== '' ||
+      state.type !== '' ||
+      !emailsError
+    ) {
+      const input = { ...state }
+      createClient({ variables: { input } })
+        .then(resp => {
+          if (resp.data) {
+            const { name, surname } = resp.data.createClient
+            alert(`Cliente ${name} ${surname} creado.`);
+          } else {
+            alert('Error. Cliente no creado.');
+          }
+        });
+    } else {
+      setError(true);
+    }
   };
 
   return (
@@ -31,24 +71,14 @@ const NewClient = () => {
       style={{ flexDirection: 'column' }}
     >
       <h2 className='text-center mt-4 mb-4'>Nuevo Cliente</h2>
+      {error && (
+        <h5 className='alert alert-danger p-3 w-100 text-center'>Faltan campos por llenar!</h5>
+      )}
       <Mutation mutation={NEW_CLIENT}>
         {createClient => (
           <form
             className='col-8 m-3'
-            onSubmit={e => {
-              e.preventDefault();
-              const input = { ...state }
-              createClient({ variables: { input } })
-                .then(resp => {
-                  console.log(resp)
-                  if (resp.data) {
-                    const { name, surname } = resp.data.createClient
-                    alert(`Cliente ${name} ${surname} creado.`);
-                  } else {
-                    alert('Error. Cliente no creado.');
-                  }
-                });
-            }}
+            onSubmit={e => handleCreateClient(e, createClient)}
           >
             <div className="form-row">
               <div className="form-group col-6">
@@ -56,6 +86,7 @@ const NewClient = () => {
                 <input
                   type="text"
                   id='name'
+                  required
                   className='form-control'
                   placeholder='Nombre'
                   value={state.name}
@@ -67,6 +98,7 @@ const NewClient = () => {
                 <input
                   type="text"
                   id='surname'
+                  required
                   className='form-control'
                   placeholder='Apellido'
                   value={state.surname}
@@ -80,6 +112,7 @@ const NewClient = () => {
                 <input
                   type="text"
                   id='company'
+                  required
                   className='form-control'
                   placeholder='Empresa'
                   value={state.company}
@@ -91,6 +124,7 @@ const NewClient = () => {
                 <input
                   type="email"
                   id='email'
+                  required
                   className='form-control'
                   placeholder='Email'
                   value={state.emails[0].email}
@@ -104,6 +138,7 @@ const NewClient = () => {
                 <input
                   type="text"
                   id='age'
+                  required
                   className='form-control'
                   placeholder='Edad'
                   value={state.age}
