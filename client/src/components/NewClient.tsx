@@ -13,6 +13,7 @@ const NewClient = () => {
     age: '',
     type: ''
   });
+  const numberEmails = state.emails.length;
 
   const [error, setError] = useState(false);
   const [messageModal, setMessageModal] = useState('');
@@ -54,14 +55,6 @@ const NewClient = () => {
     ) {
       const input = { ...state }
       createClient({ variables: { input } })
-        // .then(resp => {
-        //   if (resp.data) {
-        //     const { name, surname } = resp.data.createClient
-        //     setMessageModal(`Cliente ${name} ${surname} creado.`);
-        //   } else {
-        //     setMessageModal('Error. Cliente no creado.');
-        //   }
-        // });
     } else {
       setError(true);
     }
@@ -77,6 +70,18 @@ const NewClient = () => {
       age: '',
       type: ''
     });
+  };
+
+  const handleAddEmail = () => {
+    const emails = state.emails.map(item => item);
+    emails.push({ email: '' });
+    setState({ ...state, emails });
+  };
+
+  const handleRemoveEmail = (id: number) => {
+    const emails = state.emails.map(item => item);
+    emails.splice(id, 1);
+    setState({ ...state, emails });
   };
 
   return (
@@ -125,7 +130,7 @@ const NewClient = () => {
               </div>
             </div>
             <div className="form-row">
-              <div className="form-group col-6">
+              <div className="form-group col-12">
                 <label htmlFor="company">Empresa</label>
                 <input
                   type="text"
@@ -137,19 +142,51 @@ const NewClient = () => {
                   onChange={e => setState({ ...state, company: e.target.value })}
                 />
               </div>
-              <div className="form-group col-6">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id='email'
-                  required
-                  className='form-control'
-                  placeholder='Email'
-                  value={state.emails[0].email}
-                  onChange={e => handleChangeEmails(e, 0)}
-                />
-              </div>
             </div>
+            
+            <div className="form-row d-flex justify-content-center mb-4">
+              {state.emails.map((email, idx) => (
+                <div className="form-group col-12" key={idx}>
+                  <label htmlFor={`email${idx}`}>
+                    Email {numberEmails > 1 ? `${idx + 1}` : ''}
+                  </label>
+                  <input
+                    type="email"
+                    id={`email${idx}`}
+                    required
+                    className='form-control'
+                    placeholder='Email'
+                    value={email.email}
+                    onChange={e => handleChangeEmails(e, idx)}
+                  />
+                  {numberEmails > 1 && (
+                    <span
+                      style={{
+                        fontSize: '24px',
+                        position: 'absolute',
+                        right: '12px',
+                        top: '28px',
+                        color: 'red',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleRemoveEmail(idx)}
+                    >&times;</span>
+                  )}
+                </div>
+              ))}
+              <button
+                type='button'
+                className='btn btn-warning float-right'
+                onClick={handleAddEmail}
+              >Agregar Email</button>
+            </div>
+            
+            
+            
+            
+            
+            
+            
             <div className="form-row">
               <div className="form-group col-6">
                 <label htmlFor="age">Edad</label>
