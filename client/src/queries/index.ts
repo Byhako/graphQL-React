@@ -11,3 +11,16 @@ export const CLIENTS_QUERY = gql`
     }
   }
 `;
+
+export const CLIENT_QUERY = gql`
+  query getClient($id: ID) {
+    getClient(id: $id) {
+      name
+      surname
+      company
+      emails { email }
+      age
+      type
+    }
+  }
+`;
