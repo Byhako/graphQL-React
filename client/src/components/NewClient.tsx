@@ -5,7 +5,16 @@ import { NEW_CLIENT } from '../mutations';
 import { Mutation } from 'react-apollo';
 
 const NewClient = () => {
-  const [state, setState] = useState({
+  interface Email { email: string };
+  interface State {
+    name: string,
+    surname: string,
+    company: string,
+    emails: Email,
+    age: string,
+    type: string
+  };
+  const [state, setState] = useState<State>({
     name: '',
     surname: '',
     company: '',
@@ -13,10 +22,10 @@ const NewClient = () => {
     age: '',
     type: ''
   });
-  const numberEmails = state.emails.length;
+  const numberEmails: number = state.emails.length;
 
-  const [error, setError] = useState(false);
-  const [messageModal, setMessageModal] = useState('');
+  const [error, setError] = useState<boolean>(false);
+  const [messageModal, setMessageModal] = useState<string>('');
 
   useEffect(() => {
     if (error) {
@@ -27,8 +36,8 @@ const NewClient = () => {
   }, [error]);
 
   const handleChangeEmails = (e: any, idx: number) => {
-    const value = e.target.value;
-    const emails = state.emails.map(email => email);
+    const value: string = e.target.value;
+    const emails: object[] = state.emails.map((email: object) => email);
     if (emails[idx]) {
       emails[idx] = { email: value };
     } else {
@@ -39,7 +48,7 @@ const NewClient = () => {
 
   const handleCreateClient = (e, createClient) => {
     e.preventDefault();
-    let emailsError = false;
+    let emailsError: boolean = false;
 
     state.emails.forEach((item: any) => {
       if (!item.email) emailsError = true;
@@ -53,7 +62,7 @@ const NewClient = () => {
       state.type !== '' ||
       !emailsError
     ) {
-      const input = { ...state }
+      const input: object = { ...state }
       createClient({ variables: { input } })
     } else {
       setError(true);
@@ -73,13 +82,13 @@ const NewClient = () => {
   };
 
   const handleAddEmail = () => {
-    const emails = state.emails.map(item => item);
+    const emails = state.emails.map((item: object) => item);
     emails.push({ email: '' });
     setState({ ...state, emails });
   };
 
   const handleRemoveEmail = (id: number) => {
-    const emails = state.emails.map(item => item);
+    const emails = state.emails.map((item: object) => item);
     emails.splice(id, 1);
     setState({ ...state, emails });
   };
@@ -145,7 +154,7 @@ const NewClient = () => {
             </div>
             
             <div className="form-row d-flex justify-content-center mb-4">
-              {state.emails.map((email, idx) => (
+              {state.emails.map((email: Email, idx: number) => (
                 <div className="form-group col-12" key={idx}>
                   <label htmlFor={`email${idx}`}>
                     Email {numberEmails > 1 ? `${idx + 1}` : ''}
@@ -180,13 +189,7 @@ const NewClient = () => {
                 onClick={handleAddEmail}
               >Agregar Email</button>
             </div>
-            
-            
-            
-            
-            
-            
-            
+
             <div className="form-row">
               <div className="form-group col-6">
                 <label htmlFor="age">Edad</label>
