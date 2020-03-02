@@ -23,7 +23,7 @@ enum TypeClient {
 """Query client"""
 type Query {
   """Query to get all clients"""
-  getClients(limit: Int): [Cliente]
+  getClients(limit: Int, offset: Int): [Cliente]
   """Query to get client information"""
   getClient(id: ID): Cliente
 }

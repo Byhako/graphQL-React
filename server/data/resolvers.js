@@ -2,8 +2,8 @@ import { Clients } from './db';
 
 export const resolvers = {
   Query: {
-    getClients: (root, {limit}) => {
-      return Clients.find({}).limit(limit);
+    getClients: (root, {limit, offset}) => {
+      return Clients.find({}).limit(limit).skip(offset);
     },
     getClient: (root, {id}) => {
       return new Promise((resolve, rejects) => {

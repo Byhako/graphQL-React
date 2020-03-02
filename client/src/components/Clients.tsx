@@ -1,14 +1,26 @@
-import React, { Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CLIENTS_QUERY } from '../queries';
 import { DELETE_CLIENT } from '../mutations';
 
+import Pager from './Pager';
+
 const Clients = () => {
+  interface Pagination {
+    limit: number,
+    page: number,
+  }
+  const [pagination, setPagination] = useState<Pagination>({
+    limit: 5,
+    page: 0
+  })
+  const offset = pagination.limit * pagination.page;
   // pollInterval={1000}
   const { loading, error, data, refetch } = useQuery(CLIENTS_QUERY, {
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
+    variables: { limit: pagination.limit, offset }
   });
 
   const [deleteClient] = useMutation(DELETE_CLIENT,{
@@ -46,6 +58,9 @@ const Clients = () => {
           </li>
         ))}
       </ul>
+      <Pager
+        page={pagination.page}
+      />
     </Fragment>
   );
 };
