@@ -26,6 +26,8 @@ type Query {
   getClients(limit: Int, offset: Int): [Cliente]
   """Query to get client information"""
   getClient(id: ID): Cliente
+  """Query to get number of clients"""
+  numberClients: String
 }
 
 # Mutaciones

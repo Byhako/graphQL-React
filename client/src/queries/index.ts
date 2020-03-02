@@ -9,6 +9,7 @@ export const CLIENTS_QUERY = gql`
       company
       type
     }
+    numberClients
   }
 `;
 

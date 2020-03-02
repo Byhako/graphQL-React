@@ -14,7 +14,7 @@ const Clients = () => {
   }
   const [pagination, setPagination] = useState<Pagination>({
     limit: 5,
-    page: 0
+    page: 0,
   })
   const offset = pagination.limit * pagination.page;
   // pollInterval={1000}
@@ -27,6 +27,12 @@ const Clients = () => {
     onCompleted: () => refetch(),
     onError: (error) => console.log(error)
   });
+
+  const changePage = (change: number) => {
+    let { page } = pagination;
+    page = page + change;
+    setPagination({ ...pagination, page });
+  }
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
@@ -59,7 +65,9 @@ const Clients = () => {
         ))}
       </ul>
       <Pager
-        page={pagination.page}
+        pagination={pagination}
+        numberClients={data.numberClients}
+        changePage={changePage}
       />
     </Fragment>
   );
