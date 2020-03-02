@@ -64,5 +64,5 @@ type Mutation {
   """Mutation to update client"""
   updateClient(input: UpdateClientInput): Cliente
   """Mutation to delete client"""
-  deleteClient(id: ID!): String
+  deleteClient(id: ID): String
 }

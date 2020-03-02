@@ -1,13 +1,19 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CLIENTS_QUERY } from '../queries';
+import { DELETE_CLIENT } from '../mutations';
 
 const Clients = () => {
   // pollInterval={1000}
-  const { loading, error, data } = useQuery(CLIENTS_QUERY, {
+  const { loading, error, data, refetch } = useQuery(CLIENTS_QUERY, {
     fetchPolicy: "network-only"
+  });
+
+  const [deleteClient] = useMutation(DELETE_CLIENT,{
+    onCompleted: () => refetch(),
+    onError: (error) => console.log(error)
   });
 
   if (loading) return <p>Cargando...</p>;
@@ -25,7 +31,16 @@ const Clients = () => {
               <small>{item.type}</small>
               </div>
               <div className='col-4 d-flex justify-content-end'>
-              <Link to={`/edit/${item.id}`} className='btn btn-success d-block d-md-inline-block'>Editar Cliente</Link>
+              <button
+                className='btn btn-danger d-block d-md-inline-block btn-sm'
+                // onClick={() => handleDeleteClient(item.id)}
+                onClick={() => {
+                  if (window.confirm(`Deseas borrar a ${item.name} ${item.surname}?`)) {
+                    deleteClient({ variables: { id: item.id } })
+                  }
+                }}
+              >Borrar</button>
+              <Link to={`/edit/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
               </div>
             </div>
           </li>
