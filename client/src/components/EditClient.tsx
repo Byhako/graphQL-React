@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CLIENT_QUERY } from '../queries';
 
-import { NEW_CLIENT } from '../mutations';
+import { UPDATE_CLIENT } from '../mutations';
 
 const EditClient = (props) => {
   const id: number = props.match.params.id;
@@ -57,9 +57,9 @@ const EditClient = (props) => {
     }
   }, [error]);
 
-  const [createClient] = useMutation(NEW_CLIENT,{
-    onCompleted: () => setMessageModal(`Cliente ${state.name} ${state.surname} creado.`),
-    onError: (error) => {console.log(error); setMessageModal('Error. Cliente no creado.')}
+  const [updateClient] = useMutation(UPDATE_CLIENT,{
+    onCompleted: () => setMessageModal(`Cliente ${state.name} ${state.surname} actualizado.`),
+    onError: (error) => {console.log(error); setMessageModal('Error. Cliente no actualizado.')}
   });
 
   const handleChangeEmails = (e: any, idx: number) => {
@@ -73,7 +73,7 @@ const EditClient = (props) => {
     setState({ ...state, emails });
   };
 
-  const handleUpdateClient = (e, createClient) => {
+  const handleUpdateClient = (e, updateClient) => {
     e.preventDefault();
     let emailsError: boolean = false;
 
@@ -89,8 +89,10 @@ const EditClient = (props) => {
       state.type !== '' ||
       !emailsError
     ) {
-      const input: object = { ...state }
-      createClient({ variables: { input } })
+      const emails = state.emails.map(item => ({ email: item.email }));
+      const input: object = { ...state, emails, id }
+
+      updateClient({ variables: { input } })
     } else {
       setErr(true);
     }
@@ -134,7 +136,7 @@ const EditClient = (props) => {
       )}
       <form
         className='col-8 m-3'
-        onSubmit={e => handleUpdateClient(e, createClient)}
+        onSubmit={e => handleUpdateClient(e, updateClient)}
       >
         <div className="form-row">
           <div className="form-group col-6">
@@ -240,6 +242,12 @@ const EditClient = (props) => {
             </select>
           </div>
         </div>
+        <Link to='/'>
+          <button
+            type='button'
+            className='btn btn-info float-left'
+          >Cancelar</button>
+        </Link>
         <button type='submit' className='btn btn-success float-right'>Guardar Cambios</button>
       </form>
 

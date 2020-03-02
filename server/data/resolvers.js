@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Clients } from './db';
 
 export const resolvers = {
