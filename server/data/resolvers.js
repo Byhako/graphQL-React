@@ -20,7 +20,26 @@ export const resolvers = {
           else resolve(count)
         })
       })
-    }
+    },
+    getProducts: (root, {limit, offset}) => {
+      return Products.find({}).limit(limit).skip(offset);
+    },
+    getProduct: (root, {id}) => {
+      return new Promise((resolve, rejects) => {
+        Products.findById(id, (error, product) => {
+          if (error) rejects(error)
+          else resolve(product)
+        })
+      })
+    },
+    numberProducts: (root) => {
+      return new Promise((resolve, rejects) => {
+        Products.countDocuments({}, (error, count) => {
+          if (error) rejects(error)
+          else resolve(count)
+        })
+      })
+    },
   },
   Mutation: {
     createClient: (root, {input}) => {
@@ -67,7 +86,7 @@ export const resolvers = {
         stock: input.stock
       });
 
-      newProducts.id = newProducts._id;
+      newProduct.id = newProduct._id;
 
       return new Promise((resolve, rejects) => {
         newProduct.save(error => {
@@ -75,6 +94,22 @@ export const resolvers = {
           else resolve(newProduct)
         })
       });
+    },
+    updateProduct: (root, {input}) => {
+      return new Promise((resolve, rejects) => {
+        Products.findOneAndUpdate({ _id: input.id }, input, {new: true}, (error, product) => {
+          if(error) rejects(error)
+          else resolve(product)
+        })
+      })
+    },
+    deleteProduct: (root, {id}) => {
+      return new Promise((resolve, rejects) => {
+        Products.findOneAndDelete({ _id: id}, error => {
+          if (error) rejects(error)
+          else resolve('Product removed successful.')
+        })
+      })
     }
   }
 }

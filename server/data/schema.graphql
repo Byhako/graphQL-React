@@ -22,9 +22,9 @@ enum TypeClient {
 }
 type Product {
   id: ID
-  name: String,
-  price: Int,
-  stock: Int
+  name: String!
+  price: Int!
+  stock: Int!
 }
 """Query client"""
 type Query {
@@ -34,6 +34,12 @@ type Query {
   getClient(id: ID): Cliente
   """Query to get number of clients"""
   numberClients: String
+  """Query to get all products"""
+  getProducts(limit: Int, offset: Int): [Product]
+"""Query to get client information"""
+  getProduct(id: ID): Product
+  """Query to get number of clients"""
+  numberProducts: String
 }
 
 # Mutaciones
@@ -56,7 +62,7 @@ input ClientInput {
   orders: [OrderInput]
 }
 input UpdateClientInput {
-  id: ID!
+  id: ID
   name: String
   surname: String
   company: String
@@ -67,9 +73,9 @@ input UpdateClientInput {
 }
 input ProductInput {
   id: ID
-  name: String!,
-  price: Int!,
-  stock: Int!
+  name: String
+  price: Int
+  stock: Int
 }
 """Mutation to clients"""
 type Mutation {
@@ -81,4 +87,8 @@ type Mutation {
   deleteClient(id: ID): String
   """Mutation to create new product"""
   newProduct(input: ProductInput): Product
+  """Mutation to update product"""
+  updateProduct(input: ProductInput): Product
+  """Mutation to delete product"""
+  deleteProduct(id: ID): String
 }
