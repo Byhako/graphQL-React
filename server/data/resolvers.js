@@ -1,4 +1,4 @@
-import { Clients } from './db';
+import { Clients, Products } from './db';
 
 export const resolvers = {
   Query: {
@@ -59,6 +59,22 @@ export const resolvers = {
           else resolve('Client removed successful.')
         })
       })
+    },
+    newProduct: (root, {input}) => {
+      const newProduct = new Products({
+        name: input.name,
+        price: input.price,
+        stock: input.stock
+      });
+
+      newProducts.id = newProducts._id;
+
+      return new Promise((resolve, rejects) => {
+        newProduct.save(error => {
+          if(error) rejects(error)
+          else resolve(newProduct)
+        })
+      });
     }
   }
 }
