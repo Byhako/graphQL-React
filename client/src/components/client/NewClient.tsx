@@ -216,7 +216,7 @@ const NewClient = () => {
             </select>
           </div>
         </div>
-        <Link to='/'>
+        <Link to='/clients'>
           <button
             type='button'
             className='btn btn-info float-left'
@@ -243,7 +243,7 @@ const NewClient = () => {
                 data-dismiss="modal"
                 onClick={closeModal}
               >Cerrar</button>
-              <Link to='/'>
+              <Link to='/clients'>
                 <button type="button" className="btn btn-primary">Volver a Lista</button>
               </Link>
             </div>

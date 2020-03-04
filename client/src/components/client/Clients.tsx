@@ -1,4 +1,4 @@
-import React, { useState, useEffect,Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -47,7 +47,7 @@ const Clients = () => {
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
 
   return (
-    <Fragment>
+    <div className='container'>
       <h2 className='text-center mt-4'>Lista de Clientes</h2>
       {message && (
         <h5 className='alert alert-success p-3 w-100 text-center'>{message}</h5>
@@ -82,7 +82,7 @@ const Clients = () => {
         numberClients={data.numberClients}
         changePage={changePage}
       />
-    </Fragment>
+    </div>
   );
 };
 

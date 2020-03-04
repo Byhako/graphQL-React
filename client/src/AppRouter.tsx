@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './components/Layout/Header';
-import Home from './Home';
+// import Home from './Home';
+import Clients from './components/client/Clients';
 import NewClient from './components/client/NewClient';
 import EditClient from './components/client/EditClient';
 import Products from './components/product/Products';
@@ -14,7 +15,7 @@ const AppRouter = () => (
   <BrowserRouter>
     <Header />
     <Switch>
-      <Route exact path='/' component={Home} />
+      <Route exact path='/clients' component={Clients} />
       <Route exact path='/createClient' component={NewClient} />
       <Route exact path='/editClient/:id' component={EditClient} />
       <Route exact path='/products' component={Products} />
