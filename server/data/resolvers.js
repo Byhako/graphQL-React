@@ -79,19 +79,19 @@ export const resolvers = {
         })
       })
     },
-    newProduct: (root, {input}) => {
-      const newProduct = new Products({
+    createProduct: (root, {input}) => {
+      const createProduct = new Products({
         name: input.name,
         price: input.price,
         stock: input.stock
       });
 
-      newProduct.id = newProduct._id;
+      createProduct.id = createProduct._id;
 
       return new Promise((resolve, rejects) => {
-        newProduct.save(error => {
+        createProduct.save(error => {
           if(error) rejects(error)
-          else resolve(newProduct)
+          else resolve(createProduct)
         })
       });
     },

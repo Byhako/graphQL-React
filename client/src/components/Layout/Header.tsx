@@ -15,7 +15,14 @@ const Header = () => (
       <div className='collapse navbar-collapse' id='navigation'>
         <ul className='navbar-nav ml-auto text-right'>
           <li className='nav-item active'>
-            <Link to='/createClient' className='btn btn-success'>Nuevo Cliente</Link>
+            <Link
+              to='/createProduct'
+              className='btn btn-success mr-2'
+            >Nuevo Producto</Link>
+            <Link
+              to='/createClient'
+              className='btn btn-success'
+            >Nuevo Cliente</Link>
           </li>
         </ul>
       </div>

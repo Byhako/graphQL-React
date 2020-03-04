@@ -17,7 +17,7 @@ const AppRouter = () => (
       <Route exact path='/' component={Home} />
       <Route exact path='/createClient' component={NewClient} />
       <Route exact path='/editClient/:id' component={EditClient} />
-      <Route exact path='/product' component={Products} />
+      <Route exact path='/products' component={Products} />
       <Route exact path='/createProduct' component={NewProduct} />
       <Route exact path='/editProduct/:id' component={EditProduct} />
       <Route path='' component={NofoundPage} />

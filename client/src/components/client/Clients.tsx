@@ -2,7 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CLIENTS_QUERY } from '../../queries';
+import { GET_CLIENTS } from '../../queries';
 import { DELETE_CLIENT } from '../../mutations';
 
 import Pager from '../Layout/Pager';
@@ -18,7 +18,7 @@ const Clients = () => {
   })
   const offset = pagination.limit * pagination.page;
   // pollInterval={1000}
-  const { loading, error, data, refetch } = useQuery(CLIENTS_QUERY, {
+  const { loading, error, data, refetch } = useQuery(GET_CLIENTS, {
     fetchPolicy: "network-only",
     variables: { limit: pagination.limit, offset }
   });
@@ -48,17 +48,17 @@ const Clients = () => {
               {`${item.name} ${item.surname} - ${item.company}`}
               <small>{item.type}</small>
               </div>
+
               <div className='col-4 d-flex justify-content-end'>
-              <button
-                className='btn btn-danger d-block d-md-inline-block btn-sm'
-                // onClick={() => handleDeleteClient(item.id)}
-                onClick={() => {
-                  if (window.confirm(`Deseas borrar a ${item.name} ${item.surname}?`)) {
-                    deleteClient({ variables: { id: item.id } })
-                  }
-                }}
-              >Borrar</button>
-              <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
+                <button
+                  className='btn btn-danger d-block d-md-inline-block btn-sm'
+                  onClick={() => {
+                    if (window.confirm(`Deseas borrar a ${item.name} ${item.surname}?`)) {
+                      deleteClient({ variables: { id: item.id } })
+                    }
+                  }}
+                >Borrar</button>
+                <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
               </div>
             </div>
           </li>

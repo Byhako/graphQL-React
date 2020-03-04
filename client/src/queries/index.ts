@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const CLIENTS_QUERY = gql`
+export const GET_CLIENTS = gql`
   query getClients($limit: Int, $offset: Int) {
     getClients(limit: $limit, offset: $offset) {
       id
@@ -13,7 +13,7 @@ export const CLIENTS_QUERY = gql`
   }
 `;
 
-export const CLIENT_QUERY = gql`
+export const GET_CLIENT = gql`
   query getClient($id: ID) {
     getClient(id: $id) {
       name
@@ -22,6 +22,28 @@ export const CLIENT_QUERY = gql`
       emails { email }
       age
       type
+    }
+  }
+`;
+
+export const GET_PRODUCTS = gql`
+  query getProducts($limit: Int, $offset: Int) {
+    getProducts(limit: $limit, offset: $offset) {
+      id
+      name
+      price
+      stock
+    }
+    numberProducts
+  }
+`;
+
+export const GET_PRODUCT = gql`
+  query getProduct($id: ID) {
+    getProduct(id: $id) {
+      name
+      price
+      stock
     }
   }
 `;

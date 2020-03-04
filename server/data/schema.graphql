@@ -86,7 +86,7 @@ type Mutation {
   """Mutation to delete client"""
   deleteClient(id: ID): String
   """Mutation to create new product"""
-  newProduct(input: ProductInput): Product
+  createProduct(input: ProductInput): Product
   """Mutation to update product"""
   updateProduct(input: ProductInput): Product
   """Mutation to delete product"""

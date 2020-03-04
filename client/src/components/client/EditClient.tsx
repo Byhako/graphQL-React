@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CLIENT_QUERY } from '../../queries';
+import { GET_CLIENT } from '../../queries';
 
 import { UPDATE_CLIENT } from '../../mutations';
 
@@ -30,7 +30,7 @@ const EditClient = (props) => {
   const [err, setErr] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
 
-  const { loading, error, data } = useQuery(CLIENT_QUERY, {
+  const { loading, error, data } = useQuery(GET_CLIENT, {
     fetchPolicy: "network-only",
     variables: { id }
   });
