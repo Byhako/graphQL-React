@@ -53,12 +53,32 @@ const Clients = () => {
         <h5 className='alert alert-success p-3 w-100 text-center'>{message}</h5>
       )}
       <ul className='list-group mt-4'>
+        <li className='list-group-item bg-primary text-light'>
+          <div className='row justify-content-between align-items-center'>
+            <div className='col-4 d-flex justify-content-between align-items-center'>
+              <strong>Nombre</strong>
+            </div>
+            <div className='col-2 d-flex justify-content-between align-items-center'>
+              <strong>Empresa</strong>
+            </div>
+            <div className='col-2 d-flex justify-content-between align-items-center'>
+              <strong>Categoría</strong>
+            </div>
+
+            <div className='col-4 d-flex justify-content-end' />
+          </div>
+        </li>
         {data.getClients.map((item: any) => (
           <li key={item.id} className='list-group-item'>
             <div className='row justify-content-between align-items-center'>
-              <div className='col-8 d-flex justify-content-between align-items-center'>
-              {`${item.name} ${item.surname} - ${item.company}`}
-              <small>{item.type}</small>
+              <div className='col-4 d-flex justify-content-between align-items-center'>
+              {`${item.name} ${item.surname}`}
+              </div>
+              <div className='col-2 d-flex justify-content-between align-items-center'>
+              {`${item.company}`}
+              </div>
+              <div className='col-2 d-flex justify-content-between align-items-center'>
+              {`${item.type}`}
               </div>
 
               <div className='col-4 d-flex justify-content-end'>
