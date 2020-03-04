@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -14,14 +14,23 @@ const Product = () => {
   }
   const [pagination, setPagination] = useState<Pagination>({
     limit: 5,
-    page: 0,
-  })
-  const offset = pagination.limit * pagination.page;
+    page: 1,
+  });
+  const [message, setMessage] = useState<string>('');
+  const offset = pagination.limit * (pagination.page - 1);
   // pollInterval={1000}
   const { loading, error, data, refetch } = useQuery(GET_PRODUCTS, {
     fetchPolicy: "network-only",
     variables: { limit: pagination.limit, offset }
   });
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
+    }
+  }, [message]);
 
   const [deleteProduct] = useMutation(DELETE_PRODUCT,{
     onCompleted: () => refetch(),
@@ -38,10 +47,13 @@ const Product = () => {
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
 
   return (
-    <Fragment>
+    <div className='container'>
       <h2 className='text-center mt-4'>Lista de Productos</h2>
+      {message && (
+        <h5 className='alert alert-success p-3 w-100 text-center'>{message}</h5>
+      )}
       <ul className='list-group mt-4'>
-        <li className='list-group-item'>
+        <li className='list-group-item bg-primary text-light'>
           <div className='row justify-content-between align-items-center'>
             <div className='col-4 d-flex justify-content-between align-items-center'>
               <strong>Producto</strong>
@@ -74,7 +86,8 @@ const Product = () => {
                   className='btn btn-danger d-block d-md-inline-block btn-sm'
                   onClick={() => {
                     if (window.confirm(`Deseas borrar ${item.name}?`)) {
-                      deleteProduct({ variables: { id: item.id } })
+                      deleteProduct({ variables: { id: item.id } });
+                      setMessage(`${item.name} borrado con exito.`);
                     }
                   }}
                 >Borrar</button>
@@ -89,7 +102,7 @@ const Product = () => {
         numberClients={data.numberProducts}
         changePage={changePage}
       />
-    </Fragment>
+    </div>
   );
 };
 

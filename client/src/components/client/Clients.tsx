@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect,Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -14,14 +14,23 @@ const Clients = () => {
   }
   const [pagination, setPagination] = useState<Pagination>({
     limit: 5,
-    page: 0,
-  })
-  const offset = pagination.limit * pagination.page;
+    page: 1,
+  });
+  const [message, setMessage] = useState<string>('');
+  const offset = pagination.limit * (pagination.page - 1);
   // pollInterval={1000}
   const { loading, error, data, refetch } = useQuery(GET_CLIENTS, {
     fetchPolicy: "network-only",
     variables: { limit: pagination.limit, offset }
   });
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
+    }
+  }, [message]);
 
   const [deleteClient] = useMutation(DELETE_CLIENT,{
     onCompleted: () => refetch(),
@@ -40,6 +49,9 @@ const Clients = () => {
   return (
     <Fragment>
       <h2 className='text-center mt-4'>Lista de Clientes</h2>
+      {message && (
+        <h5 className='alert alert-success p-3 w-100 text-center'>{message}</h5>
+      )}
       <ul className='list-group mt-4'>
         {data.getClients.map((item: any) => (
           <li key={item.id} className='list-group-item'>
@@ -55,6 +67,7 @@ const Clients = () => {
                   onClick={() => {
                     if (window.confirm(`Deseas borrar a ${item.name} ${item.surname}?`)) {
                       deleteClient({ variables: { id: item.id } })
+                      setMessage(`${item.name}  ${item.surname} borrado con exito.`);
                     }
                   }}
                 >Borrar</button>
