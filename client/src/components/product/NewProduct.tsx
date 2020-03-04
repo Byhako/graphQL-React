@@ -8,7 +8,7 @@ const NewProduct = () => {
   interface State {
     name: string,
     price: number,
-    company: number,
+    stock: number,
   };
   const [state, setState] = useState<State>({
     name: '',
@@ -52,7 +52,11 @@ const NewProduct = () => {
       setError('El stock debe ser mayor a 0.')
     }
     if (!isError) {
-      const input: object = { ...state }
+      const input: object = {
+        name: state.name,
+        price: +state.price,
+        stock: +state.stock
+      };
       createProduct({ variables: { input } })
     }
   };
@@ -99,7 +103,7 @@ const NewProduct = () => {
                 className='form-control'
                 placeholder='Precio del Producto'
                 value={state.price}
-                onChange={e => setState({ ...state, price: +e.target.value })}
+                onChange={e => setState({ ...state, price: e.target.value })}
               />
             </div>
           </div>
@@ -114,7 +118,7 @@ const NewProduct = () => {
               className='form-control'
               placeholder='Stock del Producto'
               value={state.stock}
-              onChange={e => setState({ ...state, stock: +e.target.value })}
+              onChange={e => setState({ ...state, stock: e.target.value })}
             />
           </div>
         </div>

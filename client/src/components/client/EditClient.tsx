@@ -50,12 +50,12 @@ const EditClient = (props) => {
   }, [data]);
 
   useEffect(() => {
-    if (error) {
+    if (err) {
       setTimeout(() => {
         setErr(false);
       }, 2000);
     }
-  }, [error]);
+  }, [err]);
 
   const [updateClient] = useMutation(UPDATE_CLIENT,{
     onCompleted: () => setMessageModal(`Cliente ${state.name} ${state.surname} actualizado.`),
