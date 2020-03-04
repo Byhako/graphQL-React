@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import Clients from './components/Clients';
+import Clients from './components/client/Clients';
 
 function Home() {
   return (

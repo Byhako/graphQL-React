@@ -15,7 +15,7 @@ const Header = () => (
       <div className='collapse navbar-collapse' id='navigation'>
         <ul className='navbar-nav ml-auto text-right'>
           <li className='nav-item active'>
-            <Link to='/create' className='btn btn-success'>Nuevo Cliente</Link>
+            <Link to='/createClient' className='btn btn-success'>Nuevo Cliente</Link>
           </li>
         </ul>
       </div>

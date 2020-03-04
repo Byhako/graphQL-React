@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useMutation } from '@apollo/react-hooks';
-import { NEW_CLIENT } from '../mutations';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { CLIENT_QUERY } from '../../queries';
 
-const NewClient = () => {
+import { UPDATE_CLIENT } from '../../mutations';
+
+const EditClient = (props) => {
+  const id: number = props.match.params.id;
   interface Email { email: string };
   interface State {
     name: string,
@@ -24,21 +27,40 @@ const NewClient = () => {
   });
   const numberEmails: number = state.emails.length;
 
-  const [error, setError] = useState<boolean>(false);
+  const [err, setErr] = useState<boolean>(false);
   const [messageModal, setMessageModal] = useState<string>('');
 
-  const [createClient] = useMutation(NEW_CLIENT,{
-    onCompleted: () => setMessageModal(`Cliente ${state.name} ${state.surname} creado.`),
-    onError: (error) => {console.log(error); setMessageModal('Error. Cliente no creado.')}
+  const { loading, error, data } = useQuery(CLIENT_QUERY, {
+    fetchPolicy: "network-only",
+    variables: { id }
   });
+
+  useEffect(() => {
+    if (data) {
+      const info: State = data.getClient;
+      setState({
+        name: info.name,
+        surname: info.surname,
+        company: info.company,
+        emails: info.emails,
+        age: info.age,
+        type: info.type
+      })
+    }
+  }, [data]);
 
   useEffect(() => {
     if (error) {
       setTimeout(() => {
-        setError(false);
+        setErr(false);
       }, 2000);
     }
   }, [error]);
+
+  const [updateClient] = useMutation(UPDATE_CLIENT,{
+    onCompleted: () => setMessageModal(`Cliente ${state.name} ${state.surname} actualizado.`),
+    onError: (error) => {console.log(error); setMessageModal('Error. Cliente no actualizado.')}
+  });
 
   const handleChangeEmails = (e: any, idx: number) => {
     const value: string = e.target.value;
@@ -51,7 +73,7 @@ const NewClient = () => {
     setState({ ...state, emails });
   };
 
-  const handleCreateClient = (e, createClient) => {
+  const handleUpdateClient = (e, updateClient) => {
     e.preventDefault();
     let emailsError: boolean = false;
 
@@ -67,10 +89,12 @@ const NewClient = () => {
       state.type !== '' ||
       !emailsError
     ) {
-      const input: object = { ...state }
-      createClient({ variables: { input } })
+      const emails = state.emails.map(item => ({ email: item.email }));
+      const input: object = { ...state, emails, id }
+
+      updateClient({ variables: { input } })
     } else {
-      setError(true);
+      setErr(true);
     }
   };
 
@@ -98,19 +122,21 @@ const NewClient = () => {
     setState({ ...state, emails });
   };
 
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>{`Error Server: ${error.message}`}</p>;
+
   return (
     <div
       className="container d-flex align-items-center"
       style={{ flexDirection: 'column' }}
     >
-      <h2 className='text-center mt-4 mb-4'>Nuevo Cliente</h2>
-      {error && (
+      <h2 className='text-center mt-4 mb-4'>Editar Client</h2>
+      {err && (
         <h5 className='alert alert-danger p-3 w-100 text-center'>Faltan campos por llenar!</h5>
       )}
-
       <form
         className='col-8 m-3'
-        onSubmit={e => handleCreateClient(e, createClient)}
+        onSubmit={e => handleUpdateClient(e, updateClient)}
       >
         <div className="form-row">
           <div className="form-group col-6">
@@ -216,6 +242,12 @@ const NewClient = () => {
             </select>
           </div>
         </div>
+        <Link to='/'>
+          <button
+            type='button'
+            className='btn btn-info float-left'
+          >Cancelar</button>
+        </Link>
         <button type='submit' className='btn btn-success float-right'>Guardar Cambios</button>
       </form>
 
@@ -248,4 +280,4 @@ const NewClient = () => {
   );
 };
 
-export default NewClient;
+export default EditClient;

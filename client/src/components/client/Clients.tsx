@@ -2,10 +2,10 @@ import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CLIENTS_QUERY } from '../queries';
-import { DELETE_CLIENT } from '../mutations';
+import { CLIENTS_QUERY } from '../../queries';
+import { DELETE_CLIENT } from '../../mutations';
 
-import Pager from './Pager';
+import Pager from '../Layout/Pager';
 
 const Clients = () => {
   interface Pagination {
@@ -58,7 +58,7 @@ const Clients = () => {
                   }
                 }}
               >Borrar</button>
-              <Link to={`/edit/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
+              <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
               </div>
             </div>
           </li>
