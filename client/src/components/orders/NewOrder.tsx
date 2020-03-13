@@ -1,8 +1,24 @@
 import React from 'react';
 import DataClient from './DataClient';
+import Products from './Products';
+
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { GET_PRODUCTS } from '../../queries';
+
+import './styles.css';
 
 const NewOrder = (props) => {
   const id: number = props.match.params.idClient;
+
+  const { loading, error, data, refetch } = useQuery(GET_PRODUCTS, {
+    fetchPolicy: "network-only",
+    // variables: { limit: pagination.limit, offset }
+  });
+
+  if (loading) return <div className="spinner" />;
+  if (error) return <p>{`Error Server: ${error.message}`}</p>;
+
+  console.log(data)
 
   return (
     <div className="container">
@@ -13,7 +29,10 @@ const NewOrder = (props) => {
           <DataClient id={id} />
         </div>
         <div className="col-md-9">
-          pedido
+          <Products
+            id={id}
+            products={data.getProducts}
+          />
         </div>
       </div>
     </div>
