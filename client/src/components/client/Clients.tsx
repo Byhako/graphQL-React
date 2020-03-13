@@ -82,6 +82,8 @@ const Clients = () => {
               </div>
 
               <div className='col-4 d-flex justify-content-end'>
+                <Link to={`/newOrder/${item.id}`} className='btn btn-info d-block d-md-inline-block btn-sm'>Pedidos</Link>
+                <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-3 mr-3 btn-sm'>Editar</Link>
                 <button
                   className='btn btn-danger d-block d-md-inline-block btn-sm'
                   onClick={() => {
@@ -90,8 +92,8 @@ const Clients = () => {
                       setMessage(`${item.name}  ${item.surname} borrado con exito.`);
                     }
                   }}
-                >Borrar</button>
-                <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
+                >Borrar
+                </button>
               </div>
             </div>
           </li>
