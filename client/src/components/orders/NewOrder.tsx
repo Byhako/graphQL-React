@@ -2,7 +2,7 @@ import React from 'react';
 import DataClient from './DataClient';
 import Products from './Products';
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import { GET_PRODUCTS } from '../../queries';
 
 import './styles.css';
@@ -10,7 +10,7 @@ import './styles.css';
 const NewOrder = (props) => {
   const id: number = props.match.params.idClient;
 
-  const { loading, error, data, refetch } = useQuery(GET_PRODUCTS, {
+  const { loading, error, data } = useQuery(GET_PRODUCTS, {
     fetchPolicy: "network-only",
     // variables: { limit: pagination.limit, offset }
   });

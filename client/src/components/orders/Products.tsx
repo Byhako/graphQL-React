@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { useMutation } from '@apollo/react-hooks';
+import { NEW_ORDER } from '../../mutations';
 
 import Summarize from './Summarize';
 
@@ -14,6 +17,10 @@ const Products = (props) => {
     quantity: number
   };
   interface Products extends Array<Product>{};
+  interface Order {
+    id: string,
+    quantity: number
+  };
 
   const [state, setState] = useState<Products>([]);
   let total: number = 0;
@@ -24,6 +31,11 @@ const Products = (props) => {
     }
   });
 
+  const [newOrder] = useMutation(NEW_ORDER, {
+    // onCompleted: () => refetch(),
+    onError: (error) => console.log(error)
+  });
+
   const handleSelect = (products: Products) => {
     if (products) {
       setState(products);
@@ -31,7 +43,6 @@ const Products = (props) => {
       setState([]);
     };
   };
-  console.log('hola', state);
 
   const deleteProduct = (idx: number) => {
     console.log('index', idx);
@@ -44,6 +55,22 @@ const Products = (props) => {
     const listProducts = state.map(item => item);
     listProducts[index].quantity = Number(quantity);
     setState(listProducts);
+  };
+
+  const handleNewOrder = () => {
+    const input = {
+      client: id,
+      total,
+      order: state.map((item: Order) => ({
+        id: item.id,
+        quantity: item.quantity
+      }))
+    }
+
+    newOrder({ variables: { input } });
+
+    window.confirm('Tú pedido se ha generado correctamente');
+    props.history.push('/clients');
   };
 
   return (
@@ -60,8 +87,8 @@ const Products = (props) => {
         isMulti
       />
       <Summarize
-        deleteProduct={deleteProduct}
         products={state}
+        deleteProduct={deleteProduct}
         changeQuantity={changeQuantity}
       />
       <p className="font-weight-bold float-right mt-3">
@@ -70,8 +97,16 @@ const Products = (props) => {
           $ {total}
         </span>
       </p>
+
+      {state.length !== 0 && 
+        <button
+          className="btn btn-info mt-4"
+          disabled={total === 0}
+          onClick={handleNewOrder}
+        >Generar Pedido</button>
+      }
     </div>
   );
 };
 
-export default Products;
+export default withRouter(Products);
