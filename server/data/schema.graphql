@@ -7,11 +7,6 @@ type Cliente {
   emails: [Email]
   age: Int
   type: TypeClient
-  orders: [Order]
-}
-type Order {
-  product: String
-  pirce: Int
 }
 type Email {
   email: String
@@ -20,11 +15,28 @@ enum TypeClient {
   BASIC
   PREMIUM
 }
+enum StateOrder {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
 type Product {
   id: ID
   name: String!
   price: Int!
   stock: Int!
+}
+type Order {
+  id: ID
+  order: [ProductOrder]
+  total: Int
+  date: String
+  client: ID
+  state: StateOrder
+}
+type ProductOrder {
+  id: ID
+  quantity: Int
 }
 """Query client"""
 type Query {
@@ -45,10 +57,6 @@ type Query {
 # Mutaciones
 input EmailInput {
   email: String
-}
-input OrderInput {
-  product: String
-  price: Int
 }
 """Parameters to create new client"""
 input ClientInput {
@@ -77,6 +85,18 @@ input ProductInput {
   price: Int
   stock: Int
 }
+input OrderInput {
+  id: ID
+  order: [ProductOrderInput]
+  total: Int
+  date: String
+  client: ID
+  state: StateOrder
+}
+input ProductOrderInput {
+  id: ID
+  quantity: Int
+}
 """Mutation to clients"""
 type Mutation {
   """Mutation to create new clients"""
@@ -91,4 +111,6 @@ type Mutation {
   updateProduct(input: ProductInput): Product
   """Mutation to delete product"""
   deleteProduct(id: ID): String
+  """Mutation to create Orders"""
+  newOrder(input: OrderInput): Order
 }

@@ -1,4 +1,4 @@
-import { Clients, Products } from './db';
+import { Clients, Products, Orders } from './db';
 
 export const resolvers = {
   Query: {
@@ -61,7 +61,7 @@ export const resolvers = {
           if(error) rejects(error)
           else resolve(newClient)
         })
-      })
+      });
     },
     updateClient: (root, {input}) => {
       return new Promise((resolve, rejects) => {
@@ -110,6 +110,36 @@ export const resolvers = {
           else resolve('Product removed successful.')
         })
       })
+    },
+    newOrder: (root, {input}) => {
+      const newOrder = new Orders({
+        order: input.order,
+        total: input.total,
+        date: new Date(),
+        client: input.client,
+        state: 'pending'
+      });
+      newOrder.id = newOrder._id;
+
+      return new Promise((resolve, rejects) => {
+        // update quantity products
+        input.order.forEach(order => {
+          Products.updateOne({ _id: order.id },
+            {
+              "$inc": {
+                "stock": -order.quantity
+              }
+            },
+            function (error) {
+              if (error) return new Error(error)
+            }
+          )
+        })
+        newOrder.save(error => {
+          if(error) rejects(error)
+          else resolve(newOrder)
+        })
+      });
     }
   }
 }
