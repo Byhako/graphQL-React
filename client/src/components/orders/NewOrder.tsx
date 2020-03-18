@@ -18,8 +18,6 @@ const NewOrder = (props) => {
   if (loading) return <div className="spinner" />;
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
 
-  console.log(data)
-
   return (
     <div className="container">
       <h1 className="text-center my-5">Nuevo Pedido</h1>
