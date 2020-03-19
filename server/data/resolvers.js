@@ -40,9 +40,9 @@ export const resolvers = {
         })
       })
     },
-    getOrders: (root, {client}) => {
+    getOrders: (root, {id}) => {
       return new Promise((resolve, rejects) => {
-        Orders.find({ client }, (error, order) => {
+        Orders.find({ client: id }, (error, order) => {
           if (error) rejects(error)
           else resolve(order)
         })
@@ -130,23 +130,39 @@ export const resolvers = {
       newOrder.id = newOrder._id;
 
       return new Promise((resolve, rejects) => {
-        // update quantity products
-        input.order.forEach(order => {
-          Products.updateOne({ _id: order.id },
-            {
-              "$inc": {
-                "stock": -order.quantity
-              }
-            },
-            function (error) {
-              if (error) return new Error(error)
-            }
-          )
-        })
         newOrder.save(error => {
           if(error) rejects(error)
           else resolve(newOrder)
-        })
+        });
+      });
+    },
+    updateOrder: (root, {input}) => {
+      return new Promise((resolve, rejects) => {
+        // update quantity products
+        if (input.state === 'COMPLETED') {
+          input.order.forEach(order => {
+            Products.updateOne({ _id: order.id },
+              {
+                "$inc": {
+                  "stock": -order.quantity
+                }
+              },
+              function (error) {
+                if (error) return new Error(error)
+              }
+            )
+          });
+        }
+
+        Orders.findOneAndUpdate(
+          { _id: input.id },
+          input,
+          { new: true },
+          error => {
+            if(error) rejects(error)
+            else resolve('Update success')
+          }
+        )
       });
     }
   }

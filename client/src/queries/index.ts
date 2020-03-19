@@ -49,8 +49,8 @@ export const GET_PRODUCT = gql`
 `;
 
 export const GET_ORDERS = gql`
-  query {
-    getOrders(client: "5e56e060b482c30502c70c75") {
+  query getOrders($id: String) {
+    getOrders(id: $id) {
       order {
         quantity
         id
@@ -59,6 +59,7 @@ export const GET_ORDERS = gql`
       total
       state
       id
+      client
     }
   }
 `;

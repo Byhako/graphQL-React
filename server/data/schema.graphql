@@ -53,7 +53,7 @@ type Query {
   """Query to get number of clients"""
   numberProducts: String
   """Query to get orders of clients"""
-  getOrders(client: String): [Order]
+  getOrders(id: String): [Order]
 }
 
 # Mutaciones
@@ -115,4 +115,6 @@ type Mutation {
   deleteProduct(id: ID): String
   """Mutation to create Orders"""
   newOrder(input: OrderInput): Order
+  """Mutation to update Order"""
+  updateOrder(input: OrderInput): String
 }

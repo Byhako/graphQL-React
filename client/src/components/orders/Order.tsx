@@ -6,7 +6,6 @@ import { GET_CLIENT, GET_ORDERS } from '../../queries';
 
 const Order = (props) => {
   const { idClient } = props.match.params;
-
   const { loading, error, data } = useQuery(GET_CLIENT, {
     fetchPolicy: "network-only",
     variables: { id: idClient }
@@ -15,7 +14,8 @@ const Order = (props) => {
   const {
     loading: loadingOrders,
     error: errorOrders,
-    data: dataOrders } = useQuery(GET_ORDERS, {
+    data: dataOrders,
+    refetch } = useQuery(GET_ORDERS, {
     fetchPolicy: "network-only",
     variables: { id: idClient }
   });
@@ -24,15 +24,13 @@ const Order = (props) => {
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
   if (errorOrders) return <p>{`Error Server: ${errorOrders.message}`}</p>;
 
-  console.log(dataOrders)
-
   return (
     <div className="container">
       <h1 className="text-center my-5">{`Pedidos de ${data.getClient.name}`}</h1>
 
       <div className="row">
         {dataOrders.getOrders.map((item) => (
-          <OrdersClient key={item.id} orders={item} />
+          <OrdersClient key={item.id} orders={item} refetch={refetch} />
         ))}
       </div>
     </div>
