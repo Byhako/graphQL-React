@@ -146,7 +146,7 @@ const EditProduct = (props) => {
           </div>
         </div>
 
-        <Link to='/'>
+        <Link to='/clients'>
           <button
             type='button'
             className='btn btn-info float-left'

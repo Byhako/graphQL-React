@@ -52,6 +52,8 @@ type Query {
   getProduct(id: ID): Product
   """Query to get number of clients"""
   numberProducts: String
+  """Query to get orders of clients"""
+  getOrders(client: String): [Order]
 }
 
 # Mutaciones

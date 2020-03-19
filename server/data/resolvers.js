@@ -40,6 +40,14 @@ export const resolvers = {
         })
       })
     },
+    getOrders: (root, {client}) => {
+      return new Promise((resolve, rejects) => {
+        Orders.find({ client }, (error, order) => {
+          if (error) rejects(error)
+          else resolve(order)
+        })
+      })
+    }
   },
   Mutation: {
     createClient: (root, {input}) => {
@@ -117,7 +125,7 @@ export const resolvers = {
         total: input.total,
         date: new Date(),
         client: input.client,
-        state: 'pending'
+        state: 'PENDING'
       });
       newOrder.id = newOrder._id;
 

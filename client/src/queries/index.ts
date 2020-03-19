@@ -47,3 +47,18 @@ export const GET_PRODUCT = gql`
     }
   }
 `;
+
+export const GET_ORDERS = gql`
+  query {
+    getOrders(client: "5e56e060b482c30502c70c75") {
+      order {
+        quantity
+        id
+      }
+      date
+      total
+      state
+      id
+    }
+  }
+`;

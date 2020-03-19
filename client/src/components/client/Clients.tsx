@@ -55,7 +55,7 @@ const Clients = () => {
       <ul className='list-group mt-4'>
         <li className='list-group-item bg-primary text-light'>
           <div className='row justify-content-between align-items-center'>
-            <div className='col-4 d-flex justify-content-between align-items-center'>
+            <div className='col-3 d-flex justify-content-between align-items-center'>
               <strong>Nombre</strong>
             </div>
             <div className='col-2 d-flex justify-content-between align-items-center'>
@@ -65,13 +65,13 @@ const Clients = () => {
               <strong>Categoría</strong>
             </div>
 
-            <div className='col-4 d-flex justify-content-end' />
+            <div className='col-5 d-flex justify-content-end' />
           </div>
         </li>
         {data.getClients.map((item: any) => (
           <li key={item.id} className='list-group-item'>
             <div className='row justify-content-between align-items-center'>
-              <div className='col-4 d-flex justify-content-between align-items-center'>
+              <div className='col-3 d-flex justify-content-between align-items-center'>
               {`${item.name} ${item.surname}`}
               </div>
               <div className='col-2 d-flex justify-content-between align-items-center'>
@@ -81,8 +81,9 @@ const Clients = () => {
               {`${item.type}`}
               </div>
 
-              <div className='col-4 d-flex justify-content-end'>
-                <Link to={`/newOrder/${item.id}`} className='btn btn-info d-block d-md-inline-block btn-sm'>Pedidos</Link>
+              <div className='col-5 d-flex justify-content-end'>
+                <Link to={`/newOrder/${item.id}`} className='btn btn-primary d-block d-md-inline-block btn-sm mr-3'>Nuevo Pedido</Link>
+                <Link to={`/order/${item.id}`} className='btn btn-info d-block d-md-inline-block btn-sm'>Ver Pedidos</Link>
                 <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-3 mr-3 btn-sm'>Editar</Link>
                 <button
                   className='btn btn-danger d-block d-md-inline-block btn-sm'
