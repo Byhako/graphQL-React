@@ -6,17 +6,22 @@ const Summarize = (props) => {
     id: string,
     price: number,
     stock: number,
-    quantity: number
+    quantity: number,
+    error: boolean
   };
 
   const { products, deleteProduct, changeQuantity } = props;
+
+  const error = products.filter(item => item.error);
 
   if (products.length === 0) return null;
 
   return (
     <div className="container">
       <h2 className="text-center my-5">Productos Seleccionados</h2>
-
+      {error.length > 0 && 
+        <div className="alert alert-danger text-center">Las cantidades no pueden ser negativas ni mayores al stock del producto.</div>
+      }
       <table className="table">
         <thead className="bg-success text-light">
           <tr className="font-wieght-bold">
@@ -40,6 +45,11 @@ const Summarize = (props) => {
                   className="form-control"
                   value={item.quantity || ''}
                   onChange={(e) => changeQuantity(e.target.value, index)}
+                  style={
+                    { borderColor:
+                      `${item.error ? 'red' : '#ced4da'}`
+                    }
+                  }
                 />
               </th>
               <th>

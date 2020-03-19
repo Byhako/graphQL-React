@@ -14,14 +14,14 @@ const Products = (props) => {
     name: string,
     price: number,
     stock: number,
-    quantity: number
+    quantity: number,
+    error: boolean
   };
   interface Products extends Array<Product>{};
   interface Order {
     id: string,
     quantity: number
   };
-
   const [state, setState] = useState<Products>([]);
   let total: number = 0;
 
@@ -53,24 +53,38 @@ const Products = (props) => {
 
   const changeQuantity = (quantity: number, index: number) => {
     const listProducts = state.map(item => item);
+    listProducts[index].error = false;
     listProducts[index].quantity = Number(quantity);
     setState(listProducts);
   };
 
   const handleNewOrder = () => {
-    const input = {
-      client: id,
-      total,
-      order: state.map((item: Order) => ({
-        id: item.id,
-        quantity: item.quantity
-      }))
+    let error: boolean = false;
+    const oldState = state.map(item => item);
+    state.forEach((item: Product, idx: number) => {
+      if (item.quantity > item.stock || item.quantity < 1) {
+        oldState[idx].error = true;
+        error = true;
+      }
+    });
+
+    if (!error) {
+      const input = {
+        client: id,
+        total,
+        order: state.map((item: Order) => ({
+          id: item.id,
+          quantity: item.quantity
+        }))
+      }
+  
+      newOrder({ variables: { input } });
+  
+      window.confirm('Tú pedido se ha generado correctamente');
+      props.history.push('/clients');
+    } else {
+      setState(oldState);
     }
-
-    newOrder({ variables: { input } });
-
-    window.confirm('Tú pedido se ha generado correctamente');
-    props.history.push('/clients');
   };
 
   return (
