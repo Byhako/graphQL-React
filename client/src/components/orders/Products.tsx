@@ -23,6 +23,8 @@ const Products = (props) => {
     quantity: number
   };
   const [state, setState] = useState<Products>([]);
+
+  const productsFiltered: Products = products.filter((item: Product) => item.stock > 0);
   let total: number = 0;
 
   state.forEach((product: Product) => {
@@ -92,7 +94,7 @@ const Products = (props) => {
       <h2 className="text-center my-5">Seleccionar Productos</h2>
       <Select
         onChange={handleSelect}
-        options={products}
+        options={productsFiltered}
         getOptionValue={option => option.id}
         getOptionLabel={option => option.name}
         components={makeAnimated()}
