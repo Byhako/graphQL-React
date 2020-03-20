@@ -8,16 +8,16 @@ export const resolvers = {
     getClient: (root, {id}) => {
       return new Promise((resolve, rejects) => {
         Clients.findById(id, (error, cliente) => {
-          if (error) rejects(error)
-          else resolve(cliente)
+          if (error) rejects(error);
+          else resolve(cliente);
         })
       })
     },
     numberClients: (root) => {
       return new Promise((resolve, rejects) => {
         Clients.countDocuments({}, (error, count) => {
-          if (error) rejects(error)
-          else resolve(count)
+          if (error) rejects(error);
+          else resolve(count);
         })
       })
     },
@@ -27,24 +27,56 @@ export const resolvers = {
     getProduct: (root, {id}) => {
       return new Promise((resolve, rejects) => {
         Products.findById(id, (error, product) => {
-          if (error) rejects(error)
-          else resolve(product)
+          if (error) rejects(error);
+          else resolve(product);
         })
       })
     },
     numberProducts: (root) => {
       return new Promise((resolve, rejects) => {
         Products.countDocuments({}, (error, count) => {
-          if (error) rejects(error)
-          else resolve(count)
+          if (error) rejects(error);
+          else resolve(count);
         })
       })
     },
     getOrders: (root, {id}) => {
       return new Promise((resolve, rejects) => {
         Orders.find({ client: id }, (error, order) => {
-          if (error) rejects(error)
-          else resolve(order)
+          if (error) rejects(error);
+          else resolve(order);
+        })
+      })
+    },
+    topClients: (root) => {
+      return new Promise((resolve, rejects) => {
+        Orders.aggregate([
+          {
+            $match: { state: 'COMPLETED' }
+          },
+          {
+            $group: {
+              _id: '$client',
+              total: { $sum: '$total' }
+            }
+          },
+          {
+            $lookup: {
+              from: 'clients',
+              localField: '_id',
+              foreignField: '_id',
+              as: 'client'
+            }
+          },
+          {
+            $sort: { total: -1 }
+          },
+          {
+            $limit: 10
+          }
+        ], (error, result) => {
+          if (error) rejects(error);
+          else resolve(result);
         })
       })
     }
@@ -66,24 +98,24 @@ export const resolvers = {
 
       return new Promise((resolve, rejects) => {
         newClient.save(error => {
-          if(error) rejects(error)
-          else resolve(newClient)
+          if(error) rejects(error);
+          else resolve(newClient);
         })
       });
     },
     updateClient: (root, {input}) => {
       return new Promise((resolve, rejects) => {
         Clients.findOneAndUpdate({ _id: input.id }, input, {new: true}, (error, client) => {
-          if(error) rejects(error)
-          else resolve(client)
+          if(error) rejects(error);
+          else resolve(client);
         })
       })
     },
     deleteClient: (root, {id}) => {
       return new Promise((resolve, rejects) => {
         Clients.findOneAndRemove({ _id: id}, error => {
-          if (error) rejects(error)
-          else resolve('Client removed successful.')
+          if (error) rejects(error);
+          else resolve('Client removed successful.');
         })
       })
     },
@@ -98,24 +130,24 @@ export const resolvers = {
 
       return new Promise((resolve, rejects) => {
         createProduct.save(error => {
-          if(error) rejects(error)
-          else resolve(createProduct)
+          if(error) rejects(error);
+          else resolve(createProduct);
         })
       });
     },
     updateProduct: (root, {input}) => {
       return new Promise((resolve, rejects) => {
         Products.findOneAndUpdate({ _id: input.id }, input, {new: true}, (error, product) => {
-          if(error) rejects(error)
-          else resolve(product)
+          if(error) rejects(error);
+          else resolve(product);
         })
       })
     },
     deleteProduct: (root, {id}) => {
       return new Promise((resolve, rejects) => {
         Products.findOneAndDelete({ _id: id}, error => {
-          if (error) rejects(error)
-          else resolve('Product removed successful.')
+          if (error) rejects(error);
+          else resolve('Product removed successful.');
         })
       })
     },
@@ -131,8 +163,8 @@ export const resolvers = {
 
       return new Promise((resolve, rejects) => {
         newOrder.save(error => {
-          if(error) rejects(error)
-          else resolve(newOrder)
+          if(error) rejects(error);
+          else resolve(newOrder);
         });
       });
     },
@@ -148,7 +180,7 @@ export const resolvers = {
                 }
               },
               function (error) {
-                if (error) return new Error(error)
+                if (error) return new Error(error);
               }
             )
           });
@@ -159,8 +191,8 @@ export const resolvers = {
           input,
           { new: true },
           error => {
-            if(error) rejects(error)
-            else resolve('Update success')
+            if(error) rejects(error);
+            else resolve('Update success');
           }
         )
       });

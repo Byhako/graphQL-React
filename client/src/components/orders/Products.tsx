@@ -38,9 +38,9 @@ const Products = (props) => {
     onError: (error) => console.log(error)
   });
 
-  const handleSelect = (products: Products) => {
-    if (products) {
-      setState(products);
+  const handleSelect = (productSelected: Products) => {
+    if (productSelected) {
+      setState(productSelected);
     } else {
       setState([]);
     };
@@ -55,8 +55,12 @@ const Products = (props) => {
 
   const changeQuantity = (quantity: number, index: number) => {
     const listProducts = state.map(item => item);
-    listProducts[index].error = false;
-    listProducts[index].quantity = Number(quantity);
+    const item = { ...listProducts[index] }
+    listProducts.splice(index, 1);
+    item.error = false;
+    item.quantity = Number(quantity);
+    listProducts.splice(index, 0, item);
+
     setState(listProducts);
   };
 

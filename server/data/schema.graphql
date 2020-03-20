@@ -1,5 +1,5 @@
 """Parameters of a client"""
-type Cliente {
+type Client {
   id: ID
   name: String
   surname: String
@@ -38,12 +38,16 @@ type ProductOrder {
   id: ID
   quantity: Int
 }
+type TotalClient {
+  total: Float
+  client: [Client]
+}
 """Query client"""
 type Query {
   """Query to get all clients"""
-  getClients(limit: Int, offset: Int): [Cliente]
+  getClients(limit: Int, offset: Int): [Client]
   """Query to get client information"""
-  getClient(id: ID): Cliente
+  getClient(id: ID): Client
   """Query to get number of clients"""
   numberClients: String
   """Query to get all products"""
@@ -54,6 +58,8 @@ type Query {
   numberProducts: String
   """Query to get orders of clients"""
   getOrders(id: String): [Order]
+  """Query to get top 10 clients"""
+  topClients: [TotalClient]
 }
 
 # Mutaciones
@@ -102,9 +108,9 @@ input ProductOrderInput {
 """Mutation to clients"""
 type Mutation {
   """Mutation to create new clients"""
-  createClient(input: ClientInput): Cliente
+  createClient(input: ClientInput): Client
   """Mutation to update client"""
-  updateClient(input: UpdateClientInput): Cliente
+  updateClient(input: UpdateClientInput): Client
   """Mutation to delete client"""
   deleteClient(id: ID): String
   """Mutation to create new product"""

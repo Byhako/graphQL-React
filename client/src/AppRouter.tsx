@@ -11,6 +11,7 @@ import NewProduct from './components/product/NewProduct';
 import EditProduct from './components/product/EditProduct';
 import NewOrder from './components/orders/NewOrder';
 import Order from './components/orders/Order';
+import Panel from './components/panel/Panel';
 import NofoundPage from './NoFoundPage';
 
 const AppRouter = () => (
@@ -25,6 +26,7 @@ const AppRouter = () => (
       <Route exact path='/editProduct/:id' component={EditProduct} />
       <Route exact path='/newOrder/:idClient' component={NewOrder} />
       <Route exact path='/order/:idClient' component={Order} />
+      <Route exact path='/panel' component={Panel} />
       <Route path='' component={NofoundPage} />
     </Switch>
   </BrowserRouter>
