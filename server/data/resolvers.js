@@ -72,7 +72,7 @@ export const resolvers = {
             $sort: { total: -1 }
           },
           {
-            $limit: 10
+            $limit: 5
           }
         ], (error, result) => {
           if (error) rejects(error);

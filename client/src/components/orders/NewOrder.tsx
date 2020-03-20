@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import DataClient from './DataClient';
 import Products from './Products';
 

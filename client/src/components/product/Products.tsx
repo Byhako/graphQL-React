@@ -68,34 +68,43 @@ const Product = () => {
             <div className='col-4 d-flex justify-content-end' />
           </div>
         </li>
-        {data.getProducts.map((item: any) => (
-          <li key={item.id} className='list-group-item'>
-            <div className='row justify-content-between align-items-center'>
-              <div className='col-4 d-flex justify-content-between align-items-center'>
-                {`${item.name}`}
-              </div>
-              <div className='col-2 d-flex justify-content-between align-items-center'>
-                {`$ ${item.price}`}
-              </div>
-              <div className='col-2 d-flex justify-content-between align-items-center'>
-                {`${item.stock}`}
-              </div>
+        {data.getProducts.map((item: any) => {
+          let clase: string = '';
+          if (item.stock < 11 && item.stock !== 0) {
+            clase = 'text-warning';
+          } else if (item.stock === 0) {
+            clase = 'text-danger font-weight-bold';
+          }
 
-              <div className='col-4 d-flex justify-content-end'>
-                <button
-                  className='btn btn-danger d-block d-md-inline-block btn-sm'
-                  onClick={() => {
-                    if (window.confirm(`Deseas borrar ${item.name}?`)) {
-                      deleteProduct({ variables: { id: item.id } });
-                      setMessage(`${item.name} borrado con exito.`);
-                    }
-                  }}
-                >Borrar</button>
-                <Link to={`/editProduct/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
+          return (
+            <li key={item.id} className='list-group-item'>
+              <div className='row justify-content-between align-items-center'>
+                <div className={`col-4 d-flex justify-content-between align-items-center ${clase}`}>
+                  {`${item.name}`}
+                </div>
+                <div className={`col-2 d-flex justify-content-between align-items-center ${clase}`}>
+                  {`$ ${item.price}`}
+                </div>
+                <div className={`col-2 d-flex justify-content-between align-items-center ${clase}`}>
+                  {`${item.stock}`}
+                </div>
+  
+                <div className='col-4 d-flex justify-content-end'>
+                  <button
+                    className='btn btn-danger d-block d-md-inline-block btn-sm'
+                    onClick={() => {
+                      if (window.confirm(`Deseas borrar ${item.name}?`)) {
+                        deleteProduct({ variables: { id: item.id } });
+                        setMessage(`${item.name} borrado con exito.`);
+                      }
+                    }}
+                  >Borrar</button>
+                  <Link to={`/editProduct/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-5 btn-sm'>Editar</Link>
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          )
+        })}
       </ul>
       <Pager
         pagination={pagination}
