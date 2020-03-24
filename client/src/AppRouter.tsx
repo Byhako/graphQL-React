@@ -12,6 +12,8 @@ import EditProduct from './components/product/EditProduct';
 import NewOrder from './components/orders/NewOrder';
 import Order from './components/orders/Order';
 import Panel from './components/panel/Panel';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 import NofoundPage from './NoFoundPage';
 
 const AppRouter = () => (
@@ -27,6 +29,8 @@ const AppRouter = () => (
       <Route exact path='/newOrder/:idClient' component={NewOrder} />
       <Route exact path='/order/:idClient' component={Order} />
       <Route exact path='/panel' component={Panel} />
+      <Route exact path='/register' component={Register} />
+      <Route exact path='/login' component={Login} />
       <Route path='' component={NofoundPage} />
     </Switch>
   </BrowserRouter>

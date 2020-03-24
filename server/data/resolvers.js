@@ -201,7 +201,7 @@ export const resolvers = {
       const userExist = await Users.findOne({ user });
 
       if (userExist) {
-        throw new Error('User already exist');
+        throw new Error(`User ${user} already exist`);
       } else {
         const newUser = await new Users({ user, password }).save();
         return 'Created successful';
