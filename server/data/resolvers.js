@@ -1,4 +1,13 @@
 import { Clients, Products, Orders, Users } from './db';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+dotenv.config({ path: 'var.env' });
+import jwt from 'jsonwebtoken';
+
+const createToken = (userLogin, secret, expiresIn) => {
+  const { user } = userLogin;
+  return jwt.sign({ user }, secret, { expiresIn });
+};
 
 export const resolvers = {
   Query: {
@@ -201,10 +210,22 @@ export const resolvers = {
       const userExist = await Users.findOne({ user });
 
       if (userExist) {
-        throw new Error(`User ${user} already exist`);
+        throw new Error(`El usuario ${user} ya Existe.`);
       } else {
         const newUser = await new Users({ user, password }).save();
         return 'Created successful';
+      }
+    },
+    authenticate: async (root, { user, password }) => {
+      const userFind = await Users.findOne({ user });
+      if (!userFind) {
+        throw new Error('Usuario no Existe.');
+      } else {
+        const passwordCorrect = await bcrypt.compare(password, userFind.password);
+        if (!passwordCorrect) {
+          throw new Error('Password Incorrecto.');
+        }
+        return { token: createToken(userFind, process.env.secret, '1hr') };
       }
     }
   }

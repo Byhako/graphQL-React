@@ -42,6 +42,9 @@ type TotalClient {
   total: Float
   client: [Client]
 }
+type Token {
+  token: String!
+}
 """Query client"""
 type Query {
   """Query to get all clients"""
@@ -125,4 +128,6 @@ type Mutation {
   updateOrder(input: OrderInput): String
   """Mutation to create users"""
   createUsers(user: String!, password: String!): String
+  """Mutation to authenticate+ users"""
+  authenticate(user: String!, password: String!): Token
 }
