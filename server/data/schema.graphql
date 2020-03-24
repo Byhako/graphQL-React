@@ -123,4 +123,6 @@ type Mutation {
   newOrder(input: OrderInput): Order
   """Mutation to update Order"""
   updateOrder(input: OrderInput): String
+  """Mutation to create users"""
+  createUsers(user: String!, password: String!): String
 }

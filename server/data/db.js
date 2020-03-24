@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 mongoose.Promise = global.Promise;
 
@@ -38,4 +39,26 @@ const ordesrSchema = new mongoose.Schema({
 });
 const Orders = mongoose.model('orders', ordesrSchema);
 
-export { Clients, Products, Orders };
+const usersSchema = new mongoose.Schema({
+  user: String,
+  password: String
+});
+// Hashear passwords
+usersSchema.pre('save', function (next) {
+  // if password is not hashed
+  if(!this.isModified('password')) {
+    return next();
+  }
+  bcrypt.genSalt(10, (error, salt) => {
+    if (error) return next(error);
+
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err);
+      this.password = hash;
+      next();
+    })
+  })
+})
+const Users = mongoose.model('users', usersSchema);
+
+export { Clients, Products, Orders, Users };

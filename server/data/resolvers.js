@@ -1,4 +1,4 @@
-import { Clients, Products, Orders } from './db';
+import { Clients, Products, Orders, Users } from './db';
 
 export const resolvers = {
   Query: {
@@ -196,6 +196,16 @@ export const resolvers = {
           }
         )
       });
+    },
+    createUsers: async (root, { user, password }) => {
+      const userExist = await Users.findOne({ user });
+
+      if (userExist) {
+        throw new Error('User already exist');
+      } else {
+        const newUser = await new Users({ user, password }).save();
+        return 'Created successful';
+      }
     }
   }
 }
