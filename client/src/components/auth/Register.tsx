@@ -15,18 +15,20 @@ const Register = ({ history }) => {
     password: '',
     repeatPassword: ''
   });
+  const [error, setError] = useState<string>('');
 
   const [createUser] = useMutation(CREATE_USERS,{
     onCompleted: () => {
       window.confirm(`Usuario ${user.user} creado.`);
       history.push('/login');
     },
-    onError: (error) => {alert(error.message)}
+    onError: (error) => {setError(error.message.split(': ')[1])}
   });
 
   const handleChange = (e): void => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
+    setError('');
   };
 
   const handleCreate = (e): void => {
@@ -41,6 +43,11 @@ const Register = ({ history }) => {
   return (
     <div className="container">
       <h1 className="text-center mb-5">Nuevo Usuario</h1>
+      {error && (
+        <h5 className='alert alert-danger p-3 w-100 text-center'>
+          {error}
+        </h5>
+      )}
       <div className="row  justify-content-center">
         <form className="col-md-8">
           <div className="form-group">
