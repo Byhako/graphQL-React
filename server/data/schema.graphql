@@ -46,7 +46,7 @@ type Token {
   token: String!
 }
 type User {
-  user: String
+  name: String
 }
 """Query client"""
 type Query {
@@ -132,7 +132,12 @@ type Mutation {
   """Mutation to update Order"""
   updateOrder(input: OrderInput): String
   """Mutation to create users"""
-  createUsers(user: String!, password: String!): String
+  createUsers(
+    user: String!,
+    password: String!,
+    role: String!,
+    name: String!
+  ): String
   """Mutation to authenticate+ users"""
   authenticate(user: String!, password: String!): Token
 }

@@ -41,8 +41,11 @@ const Orders = mongoose.model('orders', ordesrSchema);
 
 const usersSchema = new mongoose.Schema({
   user: String,
+  name: String,
+  role: String,
   password: String
 });
+
 // Hashear passwords
 usersSchema.pre('save', function (next) {
   // if password is not hashed

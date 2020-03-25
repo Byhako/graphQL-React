@@ -21,14 +21,26 @@ const AppRouter = ({ refetch, sessions }) => {
   const { getUser } = sessions;
 
   const message = getUser ?
-    `Usuario ${getUser.user}` :
+    `${getUser.name}` :
     <Redirect to='/login' />;
 
   return (
     <BrowserRouter>
       <Header session={sessions} />
       <div className="container">
-        <p className="text-right">{message}</p>
+          <h4
+            className="mb-0"
+            style={{ 
+              width: 'max-content',
+              position: 'absolute',
+              top: '18px',
+              left: '45%'
+            }}
+          >
+            <span className="badge badge-success">
+              {message}
+              </span>
+          </h4>
         <Switch>
           <Route exact path='/clients' component={Clients} />
           <Route exact path='/createClient' component={NewClient} />

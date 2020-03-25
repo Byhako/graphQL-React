@@ -213,13 +213,13 @@ export const resolvers = {
         )
       });
     },
-    createUsers: async (root, { user, password }) => {
+    createUsers: async (root, { user, password, name, role }) => {
       const userExist = await Users.findOne({ user });
 
       if (userExist) {
         throw new Error(`El usuario ${user} ya Existe.`);
       } else {
-        const newUser = await new Users({ user, password }).save();
+        await new Users({ user, password, name, role }).save();
         return 'Created successful';
       }
     },

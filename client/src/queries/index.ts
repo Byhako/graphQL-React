@@ -79,7 +79,7 @@ export const TOP_CLIENTS = gql`
 export const GET_USER = gql`
   query getUser {
     getUser {
-      user
+      name
     }
   }
 `;
