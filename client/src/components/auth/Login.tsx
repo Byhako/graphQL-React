@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { useMutation } from '@apollo/react-hooks';
 import { AUTHENTICATE } from '../../mutations';
 
-const Login = ({ history }) => {
+const Login = (props) => {
   interface User {
     user: string,
     password: string,
@@ -16,9 +16,12 @@ const Login = ({ history }) => {
   const [error, setError] = useState<string>('');
 
   const [authenticate] = useMutation(AUTHENTICATE,{
-    onCompleted: (data) => {
-      // history.push('/clients');
-      console.log(data)
+    onCompleted: async (data) => {
+      localStorage.setItem('token', data.authenticate.token);
+
+      await props.refetch();
+      setState({ user: '', password: '' });
+      props.history.push('/panel');
     },
     onError: (error) => {setError(error.message.split(': ')[1])}
   });
@@ -92,4 +95,4 @@ const Login = ({ history }) => {
   )
 };
 
-export default Login;
+export default withRouter(Login);

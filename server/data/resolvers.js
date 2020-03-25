@@ -88,6 +88,13 @@ export const resolvers = {
           else resolve(result);
         })
       })
+    },
+    getUser: (root, arg, { userCurrent }) => {
+      if (!userCurrent) {
+        return null;
+      }
+      const user = Users.findOne({ user: userCurrent.user });
+      return user;
     }
   },
   Mutation: {

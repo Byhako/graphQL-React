@@ -14,9 +14,10 @@ import Order from './components/orders/Order';
 import Panel from './components/panel/Panel';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import Sessions from './components/Layout/Sessions';
 import NofoundPage from './NoFoundPage';
 
-const AppRouter = () => (
+const AppRouter = ({ refetch, sessions }) => (
   <BrowserRouter>
     <Header />
     <Switch>
@@ -30,10 +31,12 @@ const AppRouter = () => (
       <Route exact path='/order/:idClient' component={Order} />
       <Route exact path='/panel' component={Panel} />
       <Route exact path='/register' component={Register} />
-      <Route exact path='/login' component={Login} />
+      <Route exact path='/login' render={() => <Login refetch={refetch} />} />
       <Route path='' component={NofoundPage} />
     </Switch>
   </BrowserRouter>
 );
 
-export default AppRouter;
+const RootSession = Sessions(AppRouter);
+
+export { RootSession };

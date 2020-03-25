@@ -45,6 +45,9 @@ type TotalClient {
 type Token {
   token: String!
 }
+type User {
+  user: String
+}
 """Query client"""
 type Query {
   """Query to get all clients"""
@@ -63,6 +66,8 @@ type Query {
   getOrders(id: String): [Order]
   """Query to get top 10 clients"""
   topClients: [TotalClient]
+  """Query to get user verify"""
+  getUser: User
 }
 
 # Mutaciones
