@@ -20,7 +20,7 @@ const NewProduct = () => {
 
   const [createProduct] = useMutation(NEW_PRODUCT,{
     onCompleted: () => setMessageModal(`Producto ${state.name} creado.`),
-    onError: (error) => {console.log(error); setMessageModal('Error. Producto no creado.')}
+    onError: (error) => {console.error(error); setMessageModal('Error. Producto no creado.')}
   });
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const NewProduct = () => {
     }
   }, [error]);
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setMessageModal('');
     setState({
       name: '',
@@ -40,16 +40,16 @@ const NewProduct = () => {
     });
   };
 
-  const handleCreateProduct = (e, createProduct) => {
+  const handleCreateProduct = (e, createProduct): void => {
     e.preventDefault();
     let isError: boolean = false;
     if (state.price < 0) {
       isError = true;
-      setError('El precio no puede ser negativo.')
+      setError('El precio no puede ser negativo.');
     }
     if (state.stock < 1) {
       isError = true;
-      setError('El stock debe ser mayor a 0.')
+      setError('El stock debe ser mayor a 0.');
     }
     if (!isError) {
       const input: object = {
@@ -57,7 +57,7 @@ const NewProduct = () => {
         price: +state.price,
         stock: +state.stock
       };
-      createProduct({ variables: { input } })
+      createProduct({ variables: { input } });
     }
   };
 

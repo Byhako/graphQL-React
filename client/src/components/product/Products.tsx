@@ -34,10 +34,10 @@ const Product = () => {
 
   const [deleteProduct] = useMutation(DELETE_PRODUCT,{
     onCompleted: () => refetch(),
-    onError: (error) => console.log(error)
+    onError: (error) => console.error(error)
   });
 
-  const changePage = (change: number) => {
+  const changePage = (change: number): void => {
     let { page } = pagination;
     page = page + change;
     setPagination({ ...pagination, page });

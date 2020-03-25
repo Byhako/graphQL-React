@@ -40,7 +40,7 @@ const NewClient = ({ session }) => {
     }
   }, [error]);
 
-  const handleChangeEmails = (e: any, idx: number) => {
+  const handleChangeEmails = (e: any, idx: number): void => {
     const value: string = e.target.value;
     const emails: object[] = state.emails.map((email: object) => email);
     if (emails[idx]) {
@@ -74,7 +74,7 @@ const NewClient = ({ session }) => {
     }
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setMessageModal('');
     setState({
       name: '',
@@ -86,13 +86,13 @@ const NewClient = ({ session }) => {
     });
   };
 
-  const handleAddEmail = () => {
+  const handleAddEmail = (): void => {
     const emails = state.emails.map((item: object) => item);
     emails.push({ email: '' });
     setState({ ...state, emails });
   };
 
-  const handleRemoveEmail = (id: number) => {
+  const handleRemoveEmail = (id: number): void => {
     const emails = state.emails.map((item: object) => item);
     emails.splice(id, 1);
     setState({ ...state, emails });

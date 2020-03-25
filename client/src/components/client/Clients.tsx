@@ -42,7 +42,7 @@ const Clients = ({ session }) => {
     onError: (error) => console.log(error)
   });
 
-  const changePage = (change: number) => {
+  const changePage = (change: number): void => {
     let { page } = pagination;
     page = page + change;
     setPagination({ ...pagination, page });

@@ -8,14 +8,13 @@ const OrdersClient = (props) => {
   const { orders, refetch } = props;
   const dateFormat = new Date(Number(orders.date));
   const { id, order, total, client, state } = orders;
-  console.log(orders)
 
   const [updateOrder] = useMutation(UPDATE_ORDER, {
     onCompleted: () => refetch(),
-    onError: (error) => console.log(error)
+    onError: (error) => console.error(error)
   });
 
-  let clase;
+  let clase: string;
 
   if (state === 'PENDING') {
     clase = 'bg-warning';
@@ -25,7 +24,7 @@ const OrdersClient = (props) => {
     clase = 'bg-danger';
   }
 
-  const handleOnChane = (value: string) => {
+  const handleOnChane = (value: string): void => {
     const orderOld = order.map(item => ({
       quantity: item.quantity,
       id: item.id

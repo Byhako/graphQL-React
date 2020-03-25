@@ -47,10 +47,10 @@ const EditProduct = (props) => {
 
   const [updateProduct] = useMutation(UPDATE_PRODUCT,{
     onCompleted: () => setMessageModal(`Producto ${state.name} actualizado.`),
-    onError: (error) => {console.log(error); setMessageModal('Error. Producto no actualizado.')}
+    onError: (error) => {console.error(error); setMessageModal('Error. Producto no actualizado.')}
   });
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setMessageModal('');
     setState({
       name: '',
@@ -59,7 +59,7 @@ const EditProduct = (props) => {
     });
   };
 
-  const handleUpdateProduct = (e, updateProduct) => {
+  const handleUpdateProduct = (e, updateProduct): void => {
     e.preventDefault();
     let isError: boolean = false;
     if (state.price < 0) {

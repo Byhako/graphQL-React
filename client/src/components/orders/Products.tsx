@@ -27,7 +27,7 @@ const Products = (props) => {
   const productsFiltered: Products = products.filter((item: Product) => item.stock > 0);
   let total: number = 0;
 
-  state.forEach((product: Product) => {
+  state.forEach((product: Product): void => {
     if (product.quantity) {
       total += product.quantity * product.price;
     }
@@ -38,7 +38,7 @@ const Products = (props) => {
     onError: (error) => console.log(error)
   });
 
-  const handleSelect = (productSelected: Products) => {
+  const handleSelect = (productSelected: Products): void => {
     if (productSelected) {
       setState(productSelected);
     } else {
@@ -46,14 +46,13 @@ const Products = (props) => {
     };
   };
 
-  const deleteProduct = (idx: number) => {
-    console.log('index', idx);
+  const deleteProduct = (idx: number): void => {
     const listProducts = state.map(item => item);
     listProducts.splice(idx, 1);
     setState(listProducts);
   };
 
-  const changeQuantity = (quantity: number, index: number) => {
+  const changeQuantity = (quantity: number, index: number): void => {
     const listProducts = state.map(item => item);
     const item = { ...listProducts[index] }
     listProducts.splice(index, 1);
@@ -64,7 +63,7 @@ const Products = (props) => {
     setState(listProducts);
   };
 
-  const handleNewOrder = () => {
+  const handleNewOrder = (): void => {
     let error: boolean = false;
     const oldState = state.map(item => item);
     state.forEach((item: Product, idx: number) => {

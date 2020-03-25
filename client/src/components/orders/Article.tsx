@@ -5,6 +5,11 @@ import { GET_PRODUCT } from '../../queries';
 
 const OrdersClient = (props) => {
   const { order } = props;
+  interface Product {
+    name: string,
+    price: number,
+    stork: number
+  };
 
   const { loading, error, data } = useQuery(GET_PRODUCT, {
     fetchPolicy: "network-only",
@@ -13,8 +18,7 @@ const OrdersClient = (props) => {
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
-
-  const product = data.getProduct;
+  const product: Product = data.getProduct;
 
   return (
     <div className='border mb-4 p-4' style={{ backgroundColor: 'whiteSmoke' }}>

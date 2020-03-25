@@ -62,7 +62,7 @@ const EditClient = (props) => {
     onError: (error) => {console.log(error); setMessageModal('Error. Cliente no actualizado.')}
   });
 
-  const handleChangeEmails = (e: any, idx: number) => {
+  const handleChangeEmails = (e: any, idx: number): void => {
     const value: string = e.target.value;
     const emails: object[] = state.emails.map((email: object) => email);
     if (emails[idx]) {
@@ -73,7 +73,7 @@ const EditClient = (props) => {
     setState({ ...state, emails });
   };
 
-  const handleUpdateClient = (e, updateClient) => {
+  const handleUpdateClient = (e, updateClient): void => {
     e.preventDefault();
     let emailsError: boolean = false;
 
@@ -98,7 +98,7 @@ const EditClient = (props) => {
     }
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setMessageModal('');
     setState({
       name: '',
@@ -110,13 +110,13 @@ const EditClient = (props) => {
     });
   };
 
-  const handleAddEmail = () => {
+  const handleAddEmail = (): void => {
     const emails = state.emails.map((item: object) => item);
     emails.push({ email: '' });
     setState({ ...state, emails });
   };
 
-  const handleRemoveEmail = (id: number) => {
+  const handleRemoveEmail = (id: number): void => {
     const emails = state.emails.map((item: object) => item);
     emails.splice(id, 1);
     setState({ ...state, emails });

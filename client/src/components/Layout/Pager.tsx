@@ -3,7 +3,7 @@ import React from 'react';
 const Pager = (props) => {
   const { pagination: { limit, page }, numberClients, changePage } = props;
 
-  const totalPages = Math.ceil(numberClients/limit);
+  const totalPages: number = Math.ceil(numberClients/limit);
 
   return (
     <div className='mt-5 d-flex justify-content-center align-items-center'>

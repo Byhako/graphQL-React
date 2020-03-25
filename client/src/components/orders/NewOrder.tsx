@@ -11,7 +11,7 @@ import './styles.css';
 const NewOrder = (props) => {
   const id: number = props.match.params.idClient;
   const { session } = props;
-  const idSeller = session.getUser.id;
+  const idSeller: string = session.getUser.id;
 
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
     fetchPolicy: "network-only",

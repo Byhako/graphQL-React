@@ -12,8 +12,8 @@ const Summarize = (props) => {
 
   const { products, deleteProduct, changeQuantity } = props;
 
-  const error = products.filter(item => item.error);
-
+  const error: object[] = products.filter(item => item.error);
+  
   if (products.length === 0) return null;
 
   return (
