@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import DataClient from './DataClient';
 import Products from './Products';
 
@@ -9,6 +10,8 @@ import './styles.css';
 
 const NewOrder = (props) => {
   const id: number = props.match.params.idClient;
+  const { session } = props;
+  const idSeller = session.getUser.id;
 
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
     fetchPolicy: "network-only",
@@ -29,6 +32,7 @@ const NewOrder = (props) => {
         <div className="col-md-9">
           <Products
             id={id}
+            idSeller={idSeller}
             products={data.getProducts}
           />
         </div>
@@ -37,4 +41,4 @@ const NewOrder = (props) => {
   );
 };
 
-export default NewOrder;
+export default withRouter(NewOrder);

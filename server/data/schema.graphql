@@ -7,6 +7,7 @@ type Client {
   emails: [Email]
   age: Int
   type: TypeClient
+  idSeller: ID
 }
 type Email {
   email: String
@@ -111,6 +112,7 @@ input OrderInput {
   date: String
   client: ID
   state: StateOrder
+  idSeller: ID
 }
 input ProductOrderInput {
   id: ID

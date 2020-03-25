@@ -1,12 +1,12 @@
 import React from 'react';
 import Clients from './Clients';
 
-const Panel = () => {
+const Panel = ({ session }) => {
 
   return (
     <>
       <h1 className="text-center my-5">Top 5 Clientes que más Compran</h1>
-      <Clients />
+      <Clients session={session} />
     </>
   )
 };

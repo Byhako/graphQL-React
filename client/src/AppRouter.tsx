@@ -68,17 +68,16 @@ const AppRouter = ({ refetch, sessions }) => {
           <Route exact path='/products' component={Products} />
           <Route exact path='/createProduct' component={NewProduct} />
           <Route exact path='/editProduct/:id' component={EditProduct} />
-          <Route exact path='/newOrder/:idClient' component={NewOrder} />
+          <Route exact path='/newOrder/:idClient'
+            render={() => <NewOrder session={sessions} />}
+          />
           <Route exact path='/order/:idClient' component={Order} />
-          <Route exact path='/panel' component={Panel} />
+          <Route exact path='/panel'
+            render={() => <Panel session={sessions} />}
+          />
           <Route exact path='/register'
             render={() => <Register session={sessions} />}
           />
-          {/* <Route
-            exact
-            path='/login'
-            render={() => <Login refetch={refetch} />}
-          /> */}
           <Route path='' component={NofoundPage} />
         </Switch>
       </div>

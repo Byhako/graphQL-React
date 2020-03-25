@@ -71,6 +71,7 @@ export const TOP_CLIENTS = gql`
       client {
         name
         surname
+        idSeller
       }
     }
   }

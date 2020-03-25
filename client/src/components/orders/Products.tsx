@@ -8,7 +8,7 @@ import { NEW_ORDER } from '../../mutations';
 import Summarize from './Summarize';
 
 const Products = (props) => {
-  const { id, products } = props;
+  const { id, products, idSeller } = props;
   interface Product {
     id: string,
     name: string,
@@ -76,16 +76,17 @@ const Products = (props) => {
 
     if (!error) {
       const input = {
-        client: id,
         total,
+        idSeller,
+        client: id,
         order: state.map((item: Order) => ({
           id: item.id,
           quantity: item.quantity
         }))
       }
-  
+
       newOrder({ variables: { input } });
-  
+
       window.confirm('Tú pedido se ha generado correctamente');
       props.history.push('/clients');
     } else {

@@ -6,7 +6,7 @@ import {
 import { useQuery } from '@apollo/react-hooks';
 import { TOP_CLIENTS } from '../../queries';
 
-const Clients = () => {
+const Clients = ({ session }) => {
   interface Client {
     name: string,
     surname: string
@@ -24,7 +24,15 @@ const Clients = () => {
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{`Error Server: ${error.message}`}</p>;
 
-  const dataGraph = data.topClients.map((item: TopClient, idx: number) => (
+  let topClients = data.topClients;
+
+  if (session.getUser.role !== 'ADMINISTRADOR') {
+    topClients = data.topClients.filter(item =>
+      item.client[0].idSeller === session.getUser.id
+    );
+  }
+
+  const dataGraph = topClients.map((item: TopClient, idx: number) => (
     {
       name: item.client[0].name,
       Total: item.total

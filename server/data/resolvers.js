@@ -182,7 +182,8 @@ export const resolvers = {
         total: input.total,
         date: new Date(),
         client: input.client,
-        state: 'PENDING'
+        state: 'PENDING',
+        idSeller: input.idSeller
       });
       newOrder.id = newOrder._id;
 
