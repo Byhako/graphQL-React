@@ -48,9 +48,6 @@ const Panel = ({ session }) => {
       item.client[0].idSeller === session.getUser.id
     );
   }
-  console.log(data.topClients)
-  console.log(session.getUser.id)
-  console.log(topClients)
   const dataGraph = topClients.map((item: TopClient, idx: number) => (
     {
       name: item.client[0].name,

@@ -9,7 +9,7 @@ export const GET_CLIENTS = gql`
       company
       type
     }
-    numberClients
+    numberClients(idSeller: $idSeller)
   }
 `;
 

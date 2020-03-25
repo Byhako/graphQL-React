@@ -30,9 +30,13 @@ export const resolvers = {
         })
       })
     },
-    numberClients: (root) => {
+    numberClients: (root, {idSeller}) => {
+      let filtro = {};
+      if (idSeller) {
+        filtro = { idSeller: new ObjectId(idSeller) };
+      }
       return new Promise((resolve, rejects) => {
-        Clients.countDocuments({}, (error, count) => {
+        Clients.countDocuments(filtro, (error, count) => {
           if (error) rejects(error);
           else resolve(count);
         })
@@ -89,7 +93,7 @@ export const resolvers = {
             $sort: { total: -1 }
           },
           {
-            $limit: 5
+            $limit: 10
           }
         ], (error, result) => {
           if (error) rejects(error);

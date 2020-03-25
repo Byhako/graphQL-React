@@ -8,6 +8,7 @@ const OrdersClient = (props) => {
   const { orders, refetch } = props;
   const dateFormat = new Date(Number(orders.date));
   const { id, order, total, client, state } = orders;
+  console.log(orders)
 
   const [updateOrder] = useMutation(UPDATE_ORDER, {
     onCompleted: () => refetch(),
@@ -67,10 +68,10 @@ const OrdersClient = (props) => {
               </span>
             </p>
             <p className="card-text font-weight-bold">Total: 
-              <span className="font-weight-normal"> ${total}</span>
+              <span className="font-weight-normal bg-info text-white px-2"> ${total}</span>
             </p>
 
-            <h3 className="card-text text-center mb-3">Artículos del pedido</h3>
+            <p className="card-text text-center alert alert-primary mb-3">Artículos del pedido</p>
             {order.map((item) => (
               <Article key={item.id} order={item} />
             ))}
