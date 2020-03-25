@@ -6,7 +6,7 @@ const ButtonRegister = () => {
   return (
     <Link
       to='/register'
-      className="btn btn-outline-dark btn-sm ml-md-2 mt-2 mt-md-0 d-flex align-items-center"
+      className="btn btn-outline-dark btn-sm mr-0 mr-md-2 d-flex align-items-center justify-content-center mb-md-0 mb-2"
     >
       Registrar Usuarios
     </Link>

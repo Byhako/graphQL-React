@@ -28,7 +28,7 @@ const YesAuth = ({ session }) => (
 
       <div className='collapse navbar-collapse' id='navigation'>
         <ul className='navbar-nav ml-auto text-right'>
-          <li className='nav-item dropdown mr-md-2 mb-2 mb-md-0 mt-2 mt-md-0'>
+          <li className='nav-item dropdown mt-md-0 mt-2'>
             <button
               className='nav-link dropdown-toggle btn btn-block btn-info'
               data-toggle='dropdown'
@@ -45,7 +45,7 @@ const YesAuth = ({ session }) => (
             </div>
           </li>
 
-          <li className='nav-item dropdown'>
+          <li className='nav-item dropdown mx-md-2 mx-0 my-md-0 my-2'>
             <button
               className='nav-link dropdown-toggle btn btn-block btn-info'
               data-toggle='dropdown'

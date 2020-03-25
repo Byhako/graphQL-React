@@ -49,7 +49,7 @@ const AppRouter = ({ refetch, sessions }) => {
           style={{ 
             width: 'max-content',
             position: 'absolute',
-            top: '18px',
+            top: '20px',
             left: '45%'
           }}
         >

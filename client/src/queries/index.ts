@@ -77,6 +77,18 @@ export const TOP_CLIENTS = gql`
   }
 `;
 
+export const TOP_SELLERS = gql`
+  query topSellers {
+    topSellers {
+      total
+      seller {
+        name
+        role
+      }
+    }
+  }
+`;
+
 export const GET_USER = gql`
   query getUser {
     getUser {

@@ -97,6 +97,38 @@ export const resolvers = {
         })
       })
     },
+    topSellers: (root) => {
+      return new Promise((resolve, rejects) => {
+        Orders.aggregate([
+          {
+            $match: { state: 'COMPLETED' }
+          },
+          {
+            $group: {
+              _id: '$idSeller',
+              total: { $sum: '$total' }
+            }
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: '_id',
+              foreignField: '_id',
+              as: 'seller'
+            }
+          },
+          {
+            $sort: { total: -1 }
+          },
+          {
+            $limit: 5
+          }
+        ], (error, result) => {
+          if (error) rejects(error);
+          else resolve(result);
+        })
+      })
+    },
     getUser: (root, arg, { userCurrent }) => {
       if (!userCurrent) {
         return null;

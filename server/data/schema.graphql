@@ -43,12 +43,20 @@ type TotalClient {
   total: Float
   client: [Client]
 }
+type TotalSeller {
+  total: Float
+  seller: [User]
+}
+type Total {
+  total: Float
+  client: [Client]
+}
 type Token {
   token: String!
 }
 type User {
-  name: String
   id: ID
+  name: String
   role: String
 }
 """Query client"""
@@ -67,8 +75,10 @@ type Query {
   numberProducts: String
   """Query to get orders of clients"""
   getOrders(id: String): [Order]
-  """Query to get top 10 clients"""
+  """Query to get top 5 clients"""
   topClients: [TotalClient]
+  """Query to get top 5 sellers"""
+  topSellers: [TotalSeller]
   """Query to get user verify"""
   getUser: User
 }

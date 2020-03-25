@@ -17,7 +17,7 @@ const CloseSession = ({ history }) => (
         <button
           type='button'
           onClick={() => closeSession(client, history)}
-          className="btn btn-outline-secondary btn-sm ml-md-2 mt-2 mt-md-0"
+          className="btn btn-outline-secondary btn-sm"
         >
           Cerrar Sesión
         </button>
