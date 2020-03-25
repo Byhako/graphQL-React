@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 
 import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USERS } from '../../mutations';
 
-const Register = ({ history }) => {
+const Register = (props) => {
+  const { session } = props;
   interface User {
     user: string,
     password: string,
@@ -24,7 +25,7 @@ const Register = ({ history }) => {
   const [createUser] = useMutation(CREATE_USERS,{
     onCompleted: () => {
       window.confirm(`Usuario ${user.user} creado.`);
-      history.push('/clients');
+      props.history.push('/clients');
     },
     onError: (error) => {setError(error.message.split(': ')[1])}
   });
@@ -50,6 +51,10 @@ const Register = ({ history }) => {
       role: user.role
     };
     createUser({ variables: input })
+  }
+
+  if (session.getUser.role !== 'ADMINISTRADOR') {
+    return <Redirect to='/clients' />;
   }
 
   return (
@@ -157,4 +162,4 @@ const Register = ({ history }) => {
   )
 }
 
-export default Register;
+export default withRouter(Register);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { useMutation } from '@apollo/react-hooks';
 import { AUTHENTICATE } from '../../mutations';
@@ -76,12 +76,6 @@ const Login = (props) => {
               />
             </div>
 
-            <Link to='/register'>
-              <button
-                type='button'
-                className='btn btn-info float-left'
-              >Registrarse</button>
-            </Link>
             <button
               disabled={!state.user || !state.password}
               type="submit"

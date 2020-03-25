@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CloseSession from './CloseSession';
+import ButtonRegister from './ButtonRegister';
 
 const NoAuth = () => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex'>
     <div className='container'>
       <Link
-        to='/clients'
+        to='/login'
         className='navbar-brand text-light font-weight-bold'
       >CRM
       </Link>
@@ -14,7 +15,7 @@ const NoAuth = () => (
   </nav>
 );
 
-const YesAuth = () => (
+const YesAuth = ({ session }) => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex'>
     <div className='container'>
       <Link
@@ -60,6 +61,9 @@ const YesAuth = () => (
               >Nuevo Producto</Link>
             </div>
           </li>
+          {session.role === 'ADMINISTRADOR' && (
+            <ButtonRegister />
+          )}
           <CloseSession />
         </ul>
       </div>
@@ -69,7 +73,7 @@ const YesAuth = () => (
 
 const Header = props => {
   if (props.session.getUser) {
-    return <YesAuth />
+    return <YesAuth session={props.session.getUser} />
   }
   return <NoAuth />
 }

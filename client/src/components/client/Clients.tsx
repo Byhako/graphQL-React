@@ -18,7 +18,7 @@ const Clients = ({ session }) => {
   });
   const [message, setMessage] = useState<string>('');
   const offset = pagination.limit * (pagination.page - 1);
-  
+
   let idSeller = null;
   const { role } = session.getUser;
   if (role === 'VENDEDOR') {

@@ -20,6 +20,22 @@ import NofoundPage from './NoFoundPage';
 const AppRouter = ({ refetch, sessions }) => {
   const { getUser } = sessions;
 
+  if (!getUser) {
+    return (
+      <BrowserRouter>
+      <Header session={sessions} />
+        <Switch>
+          <Route
+            exact
+            path='/login'
+            render={() => <Login refetch={refetch} />}
+          />
+          <Route path='' component={NofoundPage} />
+        </Switch>
+    </BrowserRouter>
+    )
+  }
+
   const message = getUser ?
     `${getUser.name}` :
     <Redirect to='/login' />;
@@ -55,12 +71,14 @@ const AppRouter = ({ refetch, sessions }) => {
           <Route exact path='/newOrder/:idClient' component={NewOrder} />
           <Route exact path='/order/:idClient' component={Order} />
           <Route exact path='/panel' component={Panel} />
-          <Route exact path='/register' component={Register} />
-          <Route
+          <Route exact path='/register'
+            render={() => <Register session={sessions} />}
+          />
+          {/* <Route
             exact
             path='/login'
             render={() => <Login refetch={refetch} />}
-          />
+          /> */}
           <Route path='' component={NofoundPage} />
         </Switch>
       </div>
