@@ -31,6 +31,10 @@ const Clients = () => {
     }
   ))
 
+  if (!dataGraph.length) {
+    return <p className="text-center">No tienes clientes</p>
+  }
+
   return (
     <div className="container d-flex justify-content-center">
       <BarChart

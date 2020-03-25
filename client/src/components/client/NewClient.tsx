@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { useMutation } from '@apollo/react-hooks';
 import { NEW_CLIENT } from '../../mutations';
 
-const NewClient = () => {
+const NewClient = ({ session }) => {
   interface Email { email: string };
   interface State {
     name: string,
@@ -67,7 +67,7 @@ const NewClient = () => {
       state.type !== '' ||
       !emailsError
     ) {
-      const input: object = { ...state }
+      const input: object = { ...state, idSeller: session.getUser.id }
       createClient({ variables: { input } })
     } else {
       setError(true);
@@ -105,7 +105,9 @@ const NewClient = () => {
     >
       <h2 className='text-center mt-4 mb-4'>Nuevo Cliente</h2>
       {error && (
-        <h5 className='alert alert-danger p-3 w-100 text-center'>Faltan campos por llenar!</h5>
+        <h5 className='alert alert-danger p-3 w-100 text-center'>
+          Faltan campos por llenar!
+        </h5>
       )}
 
       <form
@@ -254,4 +256,4 @@ const NewClient = () => {
   );
 };
 
-export default NewClient;
+export default withRouter(NewClient);

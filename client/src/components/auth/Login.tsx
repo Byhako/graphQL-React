@@ -76,11 +76,11 @@ const Login = (props) => {
               />
             </div>
 
-            <Link to='/clients'>
+            <Link to='/register'>
               <button
                 type='button'
                 className='btn btn-info float-left'
-              >Cancelar</button>
+              >Registrarse</button>
             </Link>
             <button
               disabled={!state.user || !state.password}

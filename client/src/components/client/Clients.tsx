@@ -7,7 +7,7 @@ import { DELETE_CLIENT } from '../../mutations';
 
 import Pager from '../Layout/Pager';
 
-const Clients = () => {
+const Clients = ({ session }) => {
   interface Pagination {
     limit: number,
     page: number,
@@ -18,10 +18,15 @@ const Clients = () => {
   });
   const [message, setMessage] = useState<string>('');
   const offset = pagination.limit * (pagination.page - 1);
-  // pollInterval={1000}
+  
+  let idSeller = null;
+  const { role } = session.getUser;
+  if (role === 'VENDEDOR') {
+    idSeller = session.getUser.id;
+  }
   const { loading, error, data, refetch } = useQuery(GET_CLIENTS, {
     fetchPolicy: "network-only",
-    variables: { limit: pagination.limit, offset }
+    variables: { limit: pagination.limit, offset, idSeller }
   });
 
   useEffect(() => {
@@ -82,9 +87,9 @@ const Clients = () => {
               </div>
 
               <div className='col-5 d-flex justify-content-end'>
-                <Link to={`/newOrder/${item.id}`} className='btn btn-primary d-block d-md-inline-block btn-sm mr-3'>Nuevo Pedido</Link>
-                <Link to={`/order/${item.id}`} className='btn btn-info d-block d-md-inline-block btn-sm'>Ver Pedidos</Link>
-                <Link to={`/editClient/${item.id}`} className='btn btn-success d-block d-md-inline-block ml-3 mr-3 btn-sm'>Editar</Link>
+                <Link to={`/newOrder/${item.id}`} className='btn btn-primary d-flex align-items-center btn-sm mr-3'>Nuevo Pedido</Link>
+                <Link to={`/order/${item.id}`} className='btn btn-info d-flex align-items-center btn-sm'>Ver Pedidos</Link>
+                <Link to={`/editClient/${item.id}`} className='btn btn-success d-flex align-items-center ml-3 mr-3 btn-sm'>Editar</Link>
                 <button
                   className='btn btn-danger d-block d-md-inline-block btn-sm'
                   onClick={() => {

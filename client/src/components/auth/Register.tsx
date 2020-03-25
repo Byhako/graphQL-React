@@ -54,7 +54,7 @@ const Register = ({ history }) => {
 
   return (
     <div className="container">
-      <h1 className="text-center mb-5">Nuevo Usuario</h1>
+      <h1 className="text-center my-5">Nuevo Usuario</h1>
       {error && (
         <h5 className='alert alert-danger p-3 w-100 text-center'>
           {error}
@@ -131,7 +131,7 @@ const Register = ({ history }) => {
             </select>
           </div>
 
-          <Link to='/clients'>
+          <Link to='/login'>
             <button
               type='button'
               className='btn btn-info float-left'

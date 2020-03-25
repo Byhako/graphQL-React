@@ -18,7 +18,7 @@ const YesAuth = () => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex'>
     <div className='container'>
       <Link
-        to='/clients'
+        to='/panel'
         className='navbar-brand text-light font-weight-bold'
       >CRM</Link>
       <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navigation' aria-controls='navigation' aria-expanded='false' aria-label='Toggle navigation'>

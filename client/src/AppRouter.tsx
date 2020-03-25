@@ -28,22 +28,26 @@ const AppRouter = ({ refetch, sessions }) => {
     <BrowserRouter>
       <Header session={sessions} />
       <div className="container">
-          <h4
-            className="mb-0"
-            style={{ 
-              width: 'max-content',
-              position: 'absolute',
-              top: '18px',
-              left: '45%'
-            }}
-          >
-            <span className="badge badge-success">
-              {message}
-              </span>
-          </h4>
+        <h4
+          className="mb-0"
+          style={{ 
+            width: 'max-content',
+            position: 'absolute',
+            top: '18px',
+            left: '45%'
+          }}
+        >
+          <span className="badge badge-success">
+            {message}
+            </span>
+        </h4>
         <Switch>
-          <Route exact path='/clients' component={Clients} />
-          <Route exact path='/createClient' component={NewClient} />
+          <Route exact path='/clients'
+            render={() => <Clients session={sessions} />}
+          />
+          <Route exact path='/createClient'
+            render={() => <NewClient session={sessions} />}
+          />
           <Route exact path='/editClient/:id' component={EditClient} />
           <Route exact path='/products' component={Products} />
           <Route exact path='/createProduct' component={NewProduct} />

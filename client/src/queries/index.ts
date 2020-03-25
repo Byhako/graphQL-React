@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_CLIENTS = gql`
-  query getClients($limit: Int, $offset: Int) {
-    getClients(limit: $limit, offset: $offset) {
+  query getClients($limit: Int, $offset: Int, $idSeller: String) {
+    getClients(limit: $limit, offset: $offset, idSeller: $idSeller) {
       id
       name
       surname
@@ -80,6 +80,8 @@ export const GET_USER = gql`
   query getUser {
     getUser {
       name
+      id
+      role
     }
   }
 `;

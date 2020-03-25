@@ -47,11 +47,13 @@ type Token {
 }
 type User {
   name: String
+  id: ID
+  role: String
 }
 """Query client"""
 type Query {
   """Query to get all clients"""
-  getClients(limit: Int, offset: Int): [Client]
+  getClients(limit: Int, offset: Int, idSeller: String): [Client]
   """Query to get client information"""
   getClient(id: ID): Client
   """Query to get number of clients"""
@@ -84,6 +86,7 @@ input ClientInput {
   age: Int!
   type: TypeClient!
   orders: [OrderInput]
+  idSeller: ID
 }
 input UpdateClientInput {
   id: ID
