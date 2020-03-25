@@ -1,7 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CloseSession from './CloseSession';
 
-const Header = () => (
+const NoAuth = () => (
+  <nav className='navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex'>
+    <div className='container'>
+      <Link
+        to='/clients'
+        className='navbar-brand text-light font-weight-bold'
+      >CRM
+      </Link>
+    </div>
+  </nav>
+);
+
+const YesAuth = () => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex'>
     <div className='container'>
       <Link
@@ -47,10 +60,18 @@ const Header = () => (
               >Nuevo Producto</Link>
             </div>
           </li>
+          <CloseSession />
         </ul>
       </div>
     </div>
   </nav>
 );
+
+const Header = props => {
+  if (props.session.getUser) {
+    return <YesAuth />
+  }
+  return <NoAuth />
+}
 
 export default Header;
