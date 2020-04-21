@@ -136,7 +136,7 @@ const Register = (props) => {
             </select>
           </div>
 
-          <Link to='/login'>
+          <Link to='/'>
             <button
               type='button'
               className='btn btn-info float-left'

@@ -7,7 +7,7 @@ const closeSession = (client, history) => {
   // logout client
   client.resetStore();
   // redirect
-  history.push('/login');
+  history.push('/');
 };
 
 const CloseSession = ({ history }) => (

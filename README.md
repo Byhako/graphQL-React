@@ -1,5 +1,6 @@
-https://www.graphqlhub.com/playground?query
+## Proyecto de un **CMR** construido con React y GraphQL
 
-https://developer.github.com/v4/explorer/
+Para iniciar ingresamos a la carpeta server y ejecutamos `npm install` y luego `npm start`, luego hacemos lo mismo en la carpeta client.
 
-C:\Program Files\MongoDB\Server\4.2\bin
+<img src='./screenShots/img1.png' alt='login'>
+

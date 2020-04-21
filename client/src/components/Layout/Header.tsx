@@ -7,7 +7,7 @@ const NoAuth = () => (
   <nav className='navbar navbar-expand-lg navbar-dark bg-primary justify-content-between d-flex'>
     <div className='container'>
       <Link
-        to='/login'
+        to='/'
         className='navbar-brand text-light font-weight-bold'
       >CRM
       </Link>

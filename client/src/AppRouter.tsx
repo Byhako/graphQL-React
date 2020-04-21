@@ -27,7 +27,7 @@ const AppRouter = ({ refetch, sessions }) => {
         <Switch>
           <Route
             exact
-            path='/login'
+            path='/'
             render={() => <Login refetch={refetch} />}
           />
           <Route path='' component={NofoundPage} />
@@ -38,7 +38,7 @@ const AppRouter = ({ refetch, sessions }) => {
 
   const message = getUser ?
     `${getUser.name}` :
-    <Redirect to='/login' />;
+    <Redirect to='/' />;
 
   return (
     <BrowserRouter>
