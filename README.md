@@ -1,4 +1,4 @@
-# Proyecto de un **CMR** construido con React y GraphQL
+# Proyecto de un **CMR** construido con React, GraphQL y MongoDb
 
 Para iniciar ingresamos a la carpeta server y ejecutamos `npm install` y luego `npm start`, luego hacemos lo mismo en la carpeta client.
 
